@@ -1,0 +1,37 @@
+{
+ "textos": [
+  {
+   "id": "cesar-guerra-gaulesa",
+   "autor": "César",
+   "autorLa": "C. Iulius Caesar",
+   "titulo": "A Guerra da Gália",
+   "tituloLa": "Commentarii de Bello Gallico",
+   "descricao": "Os comentários de César sobre as campanhas na Gália (58–51 a.C.): os helvécios e Ariovisto, os belgas, a Bretanha, a travessia do Reno e a grande revolta de Vercingetórix até Alésia. O livro VIII é de Aulo Hírcio.",
+   "edicaoCurta": "Rice Holmes, 1914",
+   "palavras": 51298,
+   "versao": "7d58155726"
+  },
+  {
+   "id": "cicero-catilinarias",
+   "autor": "Cícero",
+   "autorLa": "M. Tullius Cicero",
+   "titulo": "Catilinárias",
+   "tituloLa": "Orationes in Catilinam",
+   "descricao": "Os quatro discursos de Cícero, cônsul em 63 a.C., contra a conjuração de Catilina: “Quo usque tandem abutere, Catilina, patientia nostra?”, a saída de Catilina de Roma, as provas contra os conjurados e o debate sobre a pena.",
+   "edicaoCurta": "Clark, 1905",
+   "palavras": 12559,
+   "versao": "025cd201b6"
+  },
+  {
+   "id": "virgilio-eneida",
+   "autor": "Virgílio",
+   "autorLa": "P. Vergilius Maro",
+   "titulo": "Eneida",
+   "tituloLa": "Aeneis",
+   "descricao": "A epopeia de Eneias, da queda de Troia à guerra no Lácio: a tempestade e Cartago, Dido, a descida aos infernos, a chegada à Itália e o duelo com Turno. “Arma virumque cano…”",
+   "edicaoCurta": "Greenough, 1900",
+   "palavras": 63721,
+   "versao": "aba4ef48ea"
+  }
+ ]
+}

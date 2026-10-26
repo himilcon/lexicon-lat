@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lexicon — Latim · Português</title>
+<meta name="description" content="Dicionário latino baseado no Lewis &amp; Short (Perseus), com tradução das acepções para o português e textos latinos ligados ao dicionário palavra por palavra. Funciona offline.">
+<meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b1916" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Lexicon">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/" aria-label="Início">
+    <span class="brand-gr">Lexicon</span>
+    <span class="brand-pt">latim · português</span>
+  </a>
+  <nav class="top-nav">
+    <a href="#/textos" title="Textos para leitura" class="nav-texts">Textos</a>
+    <a href="#/favoritos" title="Favoritos">★</a>
+    <a href="#/sobre" title="Sobre e ajuda">?</a>
+  </nav>
+</header>
+
+<div class="search-wrap">
+  <form class="search" id="search-form" role="search" autocomplete="off">
+    <input id="q" type="search" inputmode="text" spellcheck="false" autocapitalize="off" autocorrect="off"
+           placeholder="amo · amabant · amor · love" aria-label="Buscar">
+    <div class="modes" role="radiogroup" aria-label="Tipo de busca">
+      <label><input type="radio" name="mode" value="lat" checked> Latim</label>
+      <label><input type="radio" name="mode" value="por"> Português</label>
+      <label><input type="radio" name="mode" value="eng"> Inglês</label>
+    </div>
+  </form>
+  <div class="hint" id="hint"></div>
+</div>
+
+<nav class="alphabet" id="alphabet" aria-label="Navegar por letra"></nav>
+
+<main id="main">
+  <div class="loading" id="loading">
+    <div class="loading-gr">onerātur…</div>
+    <div>Carregando o dicionário <span id="load-pct"></span></div>
+  </div>
+</main>
+
+<footer class="foot">
+  Dados: <a href="https://github.com/PerseusDL/lexica" target="_blank" rel="noopener">Lewis &amp; Short, <i>A Latin Dictionary</i> (1879), Perseus Digital Library</a>
+  · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>
+  · <a href="#/sobre">sobre</a>
+</footer>
+
+<script src="app.js"></script>
+<script src="reader.js"></script>
+</body>
+</html>
