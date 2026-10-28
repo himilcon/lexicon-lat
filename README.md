@@ -21,7 +21,7 @@ Site: https://himilcon.github.io/lexicon-lat/
 - Botões **ver no Gaffiot** (gaffiot.fr) e **Logeion**.
 - Favoritos, histórico, navegação alfabética, tema claro/escuro, links diretos (`…/#/v/2280` = *amo*).
 - **Textos** (`#/textos`): César, *De Bello Gallico*; Cícero, *Catilinárias*; Virgílio, *Eneida*;
-  Tomás de Aquino, *Suma Teológica* (I, I-II, II-II, III; 1,5 milhão de palavras, em 56 arquivos por
+  Tomás de Aquino, *Suma Teológica* (I, I-II, II-II, III; 1,7 milhão de palavras, em 57 arquivos por
   tratado, página própria em `#/obra/tomas-suma`; referências como `I q. 2 a. 3` ou `I-II 90.4`).
   Toque numa palavra para ver os lemas possíveis, a análise morfológica em português, a tradução e o
   verbete. Referências diretas: `#/t/cesar-guerra-gaulesa/1.1.1`, `#/t/cicero-catilinarias/1.1`,
@@ -70,7 +70,8 @@ git clone --depth 1 --filter=blob:none --sparse https://github.com/PerseusDL/can
 git -C /tmp/latlit sparse-checkout set data/phi0448/phi001 data/phi0474/phi013 data/phi0690/phi003
 git clone --depth 1 --filter=blob:none --sparse https://github.com/Geremia/AquinasOperaOmnia /tmp/aq
 git -C /tmp/aq sparse-checkout set summa
-python3 scripts/build_text.py /tmp/latlit/data docs /tmp/aq/summa
+git clone --filter=blob:none https://github.com/AnthropologieBiblique/SummaTheologiae /tmp/stmd   # questões que faltam no AquinasOperaOmnia
+python3 scripts/build_text.py /tmp/latlit/data docs /tmp/aq/summa /tmp/stmd
 
 # Camada em português
 python3 scripts/build_pt.py

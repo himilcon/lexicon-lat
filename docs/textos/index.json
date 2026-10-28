@@ -85,7 +85,7 @@
    "qmax": 17,
    "tratado": "Deus: a essência divina (2/3)",
    "palavras": 26665,
-   "versao": "b73de90c78"
+   "versao": "16f98397a9"
   },
   {
    "id": "tomas-suma-i-q018",
@@ -103,7 +103,7 @@
    "qmax": 26,
    "tratado": "Deus: a essência divina (3/3)",
    "palavras": 29105,
-   "versao": "814698198f"
+   "versao": "3f220c4661"
   },
   {
    "id": "tomas-suma-i-q027",
@@ -139,7 +139,7 @@
    "qmax": 43,
    "tratado": "A Santíssima Trindade (2/2)",
    "palavras": 24264,
-   "versao": "53aeb2c6a1"
+   "versao": "9336aacb59"
   },
   {
    "id": "tomas-suma-i-q044",
@@ -157,7 +157,7 @@
    "qmax": 49,
    "tratado": "A criação",
    "palavras": 18236,
-   "versao": "08eb973b59"
+   "versao": "ba5fd61dfa"
   },
   {
    "id": "tomas-suma-i-q050",
@@ -193,7 +193,7 @@
    "qmax": 64,
    "tratado": "Os anjos (2/2)",
    "palavras": 19624,
-   "versao": "7e746101c8"
+   "versao": "a43851a869"
   },
   {
    "id": "tomas-suma-i-q065",
@@ -211,7 +211,7 @@
    "qmax": 74,
    "tratado": "A obra dos seis dias",
    "palavras": 21790,
-   "versao": "d2978aa1f5"
+   "versao": "0e6a1c4442"
   },
   {
    "id": "tomas-suma-i-q075",
@@ -247,7 +247,7 @@
    "qmax": 89,
    "tratado": "O homem (2/3)",
    "palavras": 31936,
-   "versao": "c57f9017f3"
+   "versao": "c14d15e511"
   },
   {
    "id": "tomas-suma-i-q090",
@@ -265,7 +265,7 @@
    "qmax": 102,
    "tratado": "O homem (3/3)",
    "palavras": 27824,
-   "versao": "02bb70015a"
+   "versao": "f586cd3802"
   },
   {
    "id": "tomas-suma-i-q103",
@@ -283,7 +283,7 @@
    "qmax": 110,
    "tratado": "O governo das criaturas (1/2)",
    "palavras": 24185,
-   "versao": "1c9ebe7b44"
+   "versao": "43cf2f915b"
   },
   {
    "id": "tomas-suma-i-q111",
@@ -301,7 +301,7 @@
    "qmax": 119,
    "tratado": "O governo das criaturas (2/2)",
    "palavras": 23999,
-   "versao": "e900ac85ed"
+   "versao": "e976815e84"
   },
   {
    "id": "tomas-suma-i-ii-q001",
@@ -318,8 +318,8 @@
    "qmin": 1,
    "qmax": 5,
    "tratado": "O fim último e a bem-aventurança",
-   "palavras": 16975,
-   "versao": "8021ee987b"
+   "palavras": 21295,
+   "versao": "09f0ebe9c2"
   },
   {
    "id": "tomas-suma-i-ii-q006",
@@ -337,7 +337,7 @@
    "qmax": 14,
    "tratado": "Os atos humanos (1/2)",
    "palavras": 22334,
-   "versao": "02721de1f3"
+   "versao": "54cafc9b35"
   },
   {
    "id": "tomas-suma-i-ii-q015",
@@ -355,7 +355,7 @@
    "qmax": 21,
    "tratado": "Os atos humanos (2/2)",
    "palavras": 23952,
-   "versao": "36fcd0365c"
+   "versao": "9f1f8435d2"
   },
   {
    "id": "tomas-suma-i-ii-q022",
@@ -373,7 +373,7 @@
    "qmax": 34,
    "tratado": "As paixões (1/2)",
    "palavras": 30510,
-   "versao": "df08f1246f"
+   "versao": "d0f7b14e97"
   },
   {
    "id": "tomas-suma-i-ii-q035",
@@ -391,7 +391,7 @@
    "qmax": 48,
    "tratado": "As paixões (2/2)",
    "palavras": 31539,
-   "versao": "8a85bf54eb"
+   "versao": "7d2ca03105"
   },
   {
    "id": "tomas-suma-i-ii-q049",
@@ -427,7 +427,7 @@
    "qmax": 63,
    "tratado": "As virtudes (1/2)",
    "palavras": 24325,
-   "versao": "0b9630596e"
+   "versao": "d813d9d549"
   },
   {
    "id": "tomas-suma-i-ii-q064",
@@ -445,7 +445,7 @@
    "qmax": 70,
    "tratado": "As virtudes (2/2)",
    "palavras": 23827,
-   "versao": "ccbaa18e66"
+   "versao": "78adcbf230"
   },
   {
    "id": "tomas-suma-i-ii-q071",
@@ -463,7 +463,7 @@
    "qmax": 78,
    "tratado": "Os vícios e os pecados (1/2)",
    "palavras": 31221,
-   "versao": "e91415f54f"
+   "versao": "c53c74d28a"
   },
   {
    "id": "tomas-suma-i-ii-q079",
@@ -481,7 +481,7 @@
    "qmax": 89,
    "tratado": "Os vícios e os pecados (2/2)",
    "palavras": 29004,
-   "versao": "bb8b4f3b27"
+   "versao": "b8cc441ae7"
   },
   {
    "id": "tomas-suma-i-ii-q090",
@@ -499,7 +499,7 @@
    "qmax": 101,
    "tratado": "A lei (1/2)",
    "palavras": 39123,
-   "versao": "3e1de47004"
+   "versao": "511091f975"
   },
   {
    "id": "tomas-suma-i-ii-q102",
@@ -517,7 +517,7 @@
    "qmax": 108,
    "tratado": "A lei (2/2)",
    "palavras": 40416,
-   "versao": "33239a091b"
+   "versao": "68658c0f44"
   },
   {
    "id": "tomas-suma-i-ii-q109",
@@ -535,14 +535,14 @@
    "qmax": 114,
    "tratado": "A graça",
    "palavras": 26109,
-   "versao": "a121a89fee"
+   "versao": "83a544b9ec"
   },
   {
    "id": "tomas-suma-ii-ii-q001",
    "autor": "Tomás de Aquino",
    "autorLa": "S. Thomas de Aquino",
-   "titulo": "Suma Teológica, II-II, qq. 1–16",
-   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 1–16",
+   "titulo": "Suma Teológica, II-II, qq. 1–7",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 1–7",
    "descricao": "O objeto e o ato da fé, a virtude da fé, os dons de entendimento e de ciência, a infidelidade, a heresia e a apostasia.",
    "edicaoCurta": "Leonina",
    "obra": "tomas-suma",
@@ -550,10 +550,28 @@
    "parsLa": "Secunda Secundae",
    "parsPt": "Segunda Seção da Segunda Parte",
    "qmin": 1,
+   "qmax": 7,
+   "tratado": "A fé (1/2)",
+   "palavras": 22478,
+   "versao": "acd7d999cc"
+  },
+  {
+   "id": "tomas-suma-ii-ii-q008",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma Teológica, II-II, qq. 8–16",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 8–16",
+   "descricao": "O objeto e o ato da fé, a virtude da fé, os dons de entendimento e de ciência, a infidelidade, a heresia e a apostasia.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-suma",
+   "pars": "II-II",
+   "parsLa": "Secunda Secundae",
+   "parsPt": "Segunda Seção da Segunda Parte",
+   "qmin": 8,
    "qmax": 16,
-   "tratado": "A fé",
-   "palavras": 34559,
-   "versao": "e91e41eb2f"
+   "tratado": "A fé (2/2)",
+   "palavras": 23111,
+   "versao": "ae9dfd0e9e"
   },
   {
    "id": "tomas-suma-ii-ii-q017",
@@ -570,15 +588,15 @@
    "qmin": 17,
    "qmax": 22,
    "tratado": "A esperança",
-   "palavras": 5092,
-   "versao": "1f33a8741a"
+   "palavras": 15922,
+   "versao": "ed89e08db9"
   },
   {
    "id": "tomas-suma-ii-ii-q023",
    "autor": "Tomás de Aquino",
    "autorLa": "S. Thomas de Aquino",
-   "titulo": "Suma Teológica, II-II, qq. 23–32",
-   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 23–32",
+   "titulo": "Suma Teológica, II-II, qq. 23–31",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 23–31",
    "descricao": "A caridade em si, seu objeto e sua ordem, seus atos e efeitos, os vícios opostos; o dom da sabedoria.",
    "edicaoCurta": "Leonina",
    "obra": "tomas-suma",
@@ -586,28 +604,28 @@
    "parsLa": "Secunda Secundae",
    "parsPt": "Segunda Seção da Segunda Parte",
    "qmin": 23,
-   "qmax": 32,
+   "qmax": 31,
    "tratado": "A caridade (1/2)",
-   "palavras": 29775,
-   "versao": "e7ba085fdc"
+   "palavras": 35181,
+   "versao": "58a624f774"
   },
   {
-   "id": "tomas-suma-ii-ii-q033",
+   "id": "tomas-suma-ii-ii-q032",
    "autor": "Tomás de Aquino",
    "autorLa": "S. Thomas de Aquino",
-   "titulo": "Suma Teológica, II-II, qq. 33–46",
-   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 33–46",
+   "titulo": "Suma Teológica, II-II, qq. 32–46",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 32–46",
    "descricao": "A caridade em si, seu objeto e sua ordem, seus atos e efeitos, os vícios opostos; o dom da sabedoria.",
    "edicaoCurta": "Leonina",
    "obra": "tomas-suma",
    "pars": "II-II",
    "parsLa": "Secunda Secundae",
    "parsPt": "Segunda Seção da Segunda Parte",
-   "qmin": 33,
+   "qmin": 32,
    "qmax": 46,
    "tratado": "A caridade (2/2)",
-   "palavras": 32829,
-   "versao": "11c1400abc"
+   "palavras": 38803,
+   "versao": "27d043efb1"
   },
   {
    "id": "tomas-suma-ii-ii-q047",
@@ -625,14 +643,14 @@
    "qmax": 56,
    "tratado": "A prudência",
    "palavras": 24156,
-   "versao": "97d73ac816"
+   "versao": "8b2e65415c"
   },
   {
    "id": "tomas-suma-ii-ii-q057",
    "autor": "Tomás de Aquino",
    "autorLa": "S. Thomas de Aquino",
-   "titulo": "Suma Teológica, II-II, qq. 57–66",
-   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 57–66",
+   "titulo": "Suma Teológica, II-II, qq. 57–67",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 57–67",
    "descricao": "O direito e a justiça, a justiça distributiva e comutativa, os vícios contra ela; as virtudes anexas: religião, piedade, observância, gratidão, veracidade, liberalidade.",
    "edicaoCurta": "Leonina",
    "obra": "tomas-suma",
@@ -640,82 +658,82 @@
    "parsLa": "Secunda Secundae",
    "parsPt": "Segunda Seção da Segunda Parte",
    "qmin": 57,
-   "qmax": 66,
+   "qmax": 67,
    "tratado": "A justiça (1/5)",
-   "palavras": 32095,
-   "versao": "3afaea6476"
+   "palavras": 34146,
+   "versao": "21967ac621"
   },
   {
-   "id": "tomas-suma-ii-ii-q067",
+   "id": "tomas-suma-ii-ii-q068",
    "autor": "Tomás de Aquino",
    "autorLa": "S. Thomas de Aquino",
-   "titulo": "Suma Teológica, II-II, qq. 67–81",
-   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 67–81",
+   "titulo": "Suma Teológica, II-II, qq. 68–82",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 68–82",
    "descricao": "O direito e a justiça, a justiça distributiva e comutativa, os vícios contra ela; as virtudes anexas: religião, piedade, observância, gratidão, veracidade, liberalidade.",
    "edicaoCurta": "Leonina",
    "obra": "tomas-suma",
    "pars": "II-II",
    "parsLa": "Secunda Secundae",
    "parsPt": "Segunda Seção da Segunda Parte",
-   "qmin": 67,
-   "qmax": 81,
+   "qmin": 68,
+   "qmax": 82,
    "tratado": "A justiça (2/5)",
-   "palavras": 31686,
-   "versao": "44b11f36ec"
+   "palavras": 31453,
+   "versao": "9157045883"
   },
   {
-   "id": "tomas-suma-ii-ii-q082",
+   "id": "tomas-suma-ii-ii-q083",
    "autor": "Tomás de Aquino",
    "autorLa": "S. Thomas de Aquino",
-   "titulo": "Suma Teológica, II-II, qq. 82–89",
-   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 82–89",
+   "titulo": "Suma Teológica, II-II, qq. 83–93",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 83–93",
    "descricao": "O direito e a justiça, a justiça distributiva e comutativa, os vícios contra ela; as virtudes anexas: religião, piedade, observância, gratidão, veracidade, liberalidade.",
    "edicaoCurta": "Leonina",
    "obra": "tomas-suma",
    "pars": "II-II",
    "parsLa": "Secunda Secundae",
    "parsPt": "Segunda Seção da Segunda Parte",
-   "qmin": 82,
-   "qmax": 89,
+   "qmin": 83,
+   "qmax": 93,
    "tratado": "A justiça (3/5)",
-   "palavras": 32804,
-   "versao": "961be1ed5c"
+   "palavras": 35582,
+   "versao": "2bee90b163"
   },
   {
-   "id": "tomas-suma-ii-ii-q090",
+   "id": "tomas-suma-ii-ii-q094",
    "autor": "Tomás de Aquino",
    "autorLa": "S. Thomas de Aquino",
-   "titulo": "Suma Teológica, II-II, qq. 90–103",
-   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 90–103",
+   "titulo": "Suma Teológica, II-II, qq. 94–105",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 94–105",
    "descricao": "O direito e a justiça, a justiça distributiva e comutativa, os vícios contra ela; as virtudes anexas: religião, piedade, observância, gratidão, veracidade, liberalidade.",
    "edicaoCurta": "Leonina",
    "obra": "tomas-suma",
    "pars": "II-II",
    "parsLa": "Secunda Secundae",
    "parsPt": "Segunda Seção da Segunda Parte",
-   "qmin": 90,
-   "qmax": 103,
+   "qmin": 94,
+   "qmax": 105,
    "tratado": "A justiça (4/5)",
-   "palavras": 30596,
-   "versao": "47a9cfb377"
+   "palavras": 32809,
+   "versao": "698ad7800b"
   },
   {
-   "id": "tomas-suma-ii-ii-q104",
+   "id": "tomas-suma-ii-ii-q106",
    "autor": "Tomás de Aquino",
    "autorLa": "S. Thomas de Aquino",
-   "titulo": "Suma Teológica, II-II, qq. 104–122",
-   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 104–122",
+   "titulo": "Suma Teológica, II-II, qq. 106–122",
+   "tituloLa": "Summa Theologiae, Secunda Secundae, qq. 106–122",
    "descricao": "O direito e a justiça, a justiça distributiva e comutativa, os vícios contra ela; as virtudes anexas: religião, piedade, observância, gratidão, veracidade, liberalidade.",
    "edicaoCurta": "Leonina",
    "obra": "tomas-suma",
    "pars": "II-II",
    "parsLa": "Secunda Secundae",
    "parsPt": "Segunda Seção da Segunda Parte",
-   "qmin": 104,
+   "qmin": 106,
    "qmax": 122,
    "tratado": "A justiça (5/5)",
-   "palavras": 33952,
-   "versao": "c348a761d9"
+   "palavras": 34400,
+   "versao": "a30e8a4e6c"
   },
   {
    "id": "tomas-suma-ii-ii-q123",
@@ -733,7 +751,7 @@
    "qmax": 140,
    "tratado": "A fortaleza",
    "palavras": 33742,
-   "versao": "ce6288bec6"
+   "versao": "33e8702f63"
   },
   {
    "id": "tomas-suma-ii-ii-q141",
@@ -751,7 +769,7 @@
    "qmax": 154,
    "tratado": "A temperança (1/2)",
    "palavras": 38045,
-   "versao": "81f114aa77"
+   "versao": "1f975a4332"
   },
   {
    "id": "tomas-suma-ii-ii-q155",
@@ -769,7 +787,7 @@
    "qmax": 170,
    "tratado": "A temperança (2/2)",
    "palavras": 36639,
-   "versao": "4c5d6108f0"
+   "versao": "7e1b7fe85b"
   },
   {
    "id": "tomas-suma-ii-ii-q171",
@@ -787,7 +805,7 @@
    "qmax": 178,
    "tratado": "A profecia e as graças carismáticas",
    "palavras": 22924,
-   "versao": "97a8be9bb7"
+   "versao": "b81ee415e2"
   },
   {
    "id": "tomas-suma-ii-ii-q179",
@@ -805,7 +823,7 @@
    "qmax": 182,
    "tratado": "A vida ativa e a vida contemplativa",
    "palavras": 10690,
-   "versao": "4ee5b42ed2"
+   "versao": "5fa097aa39"
   },
   {
    "id": "tomas-suma-ii-ii-q183",
@@ -823,7 +841,7 @@
    "qmax": 186,
    "tratado": "Os estados de vida (1/2)",
    "palavras": 22541,
-   "versao": "eedfec34c8"
+   "versao": "3adc5b6370"
   },
   {
    "id": "tomas-suma-ii-ii-q187",
@@ -841,7 +859,7 @@
    "qmax": 189,
    "tratado": "Os estados de vida (2/2)",
    "palavras": 21428,
-   "versao": "a91104a66f"
+   "versao": "f27b4ee356"
   },
   {
    "id": "tomas-suma-iii-q001",
@@ -859,7 +877,7 @@
    "qmax": 7,
    "tratado": "O mistério da Encarnação (1/3)",
    "palavras": 33057,
-   "versao": "e7f251c71e"
+   "versao": "e43b79c4b3"
   },
   {
    "id": "tomas-suma-iii-q008",
@@ -877,7 +895,7 @@
    "qmax": 15,
    "tratado": "O mistério da Encarnação (2/3)",
    "palavras": 24350,
-   "versao": "3778501f08"
+   "versao": "765230b42c"
   },
   {
    "id": "tomas-suma-iii-q016",
@@ -895,7 +913,7 @@
    "qmax": 26,
    "tratado": "O mistério da Encarnação (3/3)",
    "palavras": 31137,
-   "versao": "15bde79e6f"
+   "versao": "98ee6d2ceb"
   },
   {
    "id": "tomas-suma-iii-q027",
@@ -913,7 +931,7 @@
    "qmax": 37,
    "tratado": "A vida de Cristo (1/3)",
    "palavras": 36929,
-   "versao": "678498cc01"
+   "versao": "2dfd5309a7"
   },
   {
    "id": "tomas-suma-iii-q038",
@@ -931,7 +949,7 @@
    "qmax": 47,
    "tratado": "A vida de Cristo (2/3)",
    "palavras": 37369,
-   "versao": "dd074e197e"
+   "versao": "ea488955f7"
   },
   {
    "id": "tomas-suma-iii-q048",
@@ -949,7 +967,7 @@
    "qmax": 59,
    "tratado": "A vida de Cristo (3/3)",
    "palavras": 37531,
-   "versao": "4407e41d40"
+   "versao": "e6b37b7dcc"
   },
   {
    "id": "tomas-suma-iii-q060",
@@ -967,7 +985,7 @@
    "qmax": 65,
    "tratado": "Os sacramentos em geral",
    "palavras": 21270,
-   "versao": "e536268969"
+   "versao": "868b500097"
   },
   {
    "id": "tomas-suma-iii-q066",
@@ -985,7 +1003,7 @@
    "qmax": 72,
    "tratado": "O batismo e a confirmação",
    "palavras": 33400,
-   "versao": "231470d63e"
+   "versao": "02cc7f5ca0"
   },
   {
    "id": "tomas-suma-iii-q073",
@@ -1003,7 +1021,7 @@
    "qmax": 78,
    "tratado": "A Eucaristia (1/2)",
    "palavras": 28877,
-   "versao": "9a77110800"
+   "versao": "2fce34f34a"
   },
   {
    "id": "tomas-suma-iii-q079",
@@ -1021,7 +1039,7 @@
    "qmax": 83,
    "tratado": "A Eucaristia (2/2)",
    "palavras": 29480,
-   "versao": "4b41dd0006"
+   "versao": "dab1269a40"
   },
   {
    "id": "tomas-suma-iii-q084",
@@ -1039,7 +1057,7 @@
    "qmax": 90,
    "tratado": "A penitência",
    "palavras": 22993,
-   "versao": "dd7e35e4f4"
+   "versao": "54eb5364a5"
   }
  ],
  "obras": [
@@ -1051,7 +1069,7 @@
    "tituloLa": "Summa Theologiae",
    "edicaoCurta": "Leonina",
    "descricao": "A suma da teologia de Tomás de Aquino (1265–1273), em questões e artigos: Deus e a criação (I), o fim do homem, os atos humanos, as virtudes, a lei e a graça (I-II, II-II), Cristo e os sacramentos (III). Texto completo das partes escritas por Tomás, dividido por tratados.",
-   "palavras": 1528701
+   "palavras": 1573518
   }
  ]
 }

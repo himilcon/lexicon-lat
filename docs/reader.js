@@ -251,6 +251,15 @@ async function viewReader(id, target) {
   setActiveLetter(null);
   document.body.classList.add("reading");
   if (!R || R.id !== id || !$("#rtext", main)) {
+    // arquivos da Suma renomeados quando a divisão muda: leva o link antigo à questão certa
+    const old = id.match(/^tomas-suma-(i|i-ii|ii-ii|iii)-q(\d+)$/);
+    if (old) {
+      const parts = (await loadTextIndex()).textos.filter(t => t.obra === "tomas-suma");
+      if (!parts.some(t => t.id === id)) {
+        const go = summaTarget(target || String(+old[2]), parts, old[1].toUpperCase());
+        if (go) { location.replace(go); return; }
+      }
+    }
     main.innerHTML = `<div class="loading"><div class="loading-gr">legitur…</div><div>Carregando o texto</div></div>`;
     let doc;
     try { doc = await loadText(id); } catch (err) {

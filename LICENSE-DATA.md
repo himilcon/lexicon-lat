@@ -43,12 +43,16 @@ Modificações: omissão das notas de aparato crítico; divisão em palavras; li
 Tomás de Aquino, *Summa Theologiae*, partes I, I-II, II-II e III (até a q. 90; o *Supplementum* não está
 incluído). Texto da edição leonina (Roma, 1888–1906), tomado da coluna latina das páginas bilíngues de
 [Geremia/AquinasOperaOmnia](https://github.com/Geremia/AquinasOperaOmnia) (espelho do site de Joseph
-Kenny, O.P.), pasta `summa/`, versão de abril de 2026.
+Kenny, O.P.), pasta `summa/`, versão de abril de 2026. Nessa fonte faltam as colunas latinas de 17
+questões (I-II q. 5; II-II qq. 6–9, 11, 12, 19–24, 103, 110, 115, 116); para elas o texto vem de
+[AnthropologieBiblique/SummaTheologiae](https://github.com/AnthropologieBiblique/SummaTheologiae)
+(Markdown por artigo, também com o texto leonino), com as referências bíblicas convertidas para a
+forma abreviada usada no restante do texto (*Matth. XX*). Esse repositório também não declara licença.
 
 **Ponto a verificar antes de uso comercial:** o texto de Tomás e o da edição leonina estão em domínio
 público (inferência: a edição tem mais de 100 anos). A transcrição digital, porém, provavelmente vem do
 Corpus Thomisticum (E. Alarcón, Universidad de Navarra), e o repositório de origem não declara licença
-nem a procedência do latim. Para o uso atual, gratuito e com atribuição, não vemos impedimento; antes de
+nem a procedência do latim (o mesmo vale para a fonte complementar). Para o uso atual, gratuito e com atribuição, não vemos impedimento; antes de
 cobrar, convém confirmar os termos do Corpus Thomisticum ou trocar a fonte.
 
 Modificações: divisão em arquivos por tratado; rótulos das partes do artigo (arg., s. c., co., ad);

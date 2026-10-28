@@ -23,6 +23,7 @@ SUMMA = sys.argv[3] if len(sys.argv) > 3 else None
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import summa  # noqa: E402
+summa.MD_SRC = sys.argv[4] if len(sys.argv) > 4 else None
 import latim_medieval as LM  # noqa: E402
 MORPH = pickle.load(open(os.path.join(HERE, "morph.pkl"), "rb"))
 LSKEYS = json.load(open(os.path.join(HERE, "ls_keys.json"), encoding="utf-8"))   # id -> [chave, chave normalizada]

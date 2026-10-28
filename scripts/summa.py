@@ -80,6 +80,87 @@ def _rows(path):
     return out
 
 
+# Fonte complementar para as questões que faltam na coluna latina do AquinasOperaOmnia (17 questões,
+# sobretudo da II-II): Markdown por artigo de https://github.com/AnthropologieBiblique/SummaTheologiae
+# (mesmo texto leonino, do Corpus Thomisticum). Os rótulos são convertidos para os da fonte principal.
+MD_SRC = None
+MD_PARS = {"FP": ("Prima Pars", "Ia"), "FS": ("Prima Secundae", "Ia-IIæ"),
+           "SS": ("Secunda Secundae", "IIa-IIæ"), "TP": ("Tertia Pars", "IIIa")}
+LIVROS = {"Ac": "Act.", "Ap": "Apoc.", "Col": "Coloss.", "Ct": "Cant.", "Dn": "Dan.", "Dt": "Deut.",
+          "Ep": "Ephes.", "Est": "Esth.", "Ex": "Exod.", "Ez": "Ezech.", "Ga": "Gal.", "Gn": "Gen.",
+          "He": "Heb.", "Is": "Isaiae", "Jb": "Iob", "Jc": "Iac.", "Jdt": "Iudith", "Jn": "Ioan.",
+          "Jr": "Ierem.", "Lc": "Luc.", "Mc": "Marc.", "Ml": "Malach.", "Mt": "Matth.", "Os": "Osee",
+          "Ph": "Philipp.", "Pr": "Prov.", "Ps": "Psalm.", "Qo": "Eccle.", "Rm": "Rom.", "Sg": "Sap.",
+          "Si": "Eccli.", "Tt": "Tit."}
+
+
+def _roman(n):
+    out = ""
+    for v, r in ((100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")):
+        while n >= v:
+            out += r
+            n -= v
+    return out
+
+
+def _md_clean(t):
+    def link(m):
+        x = m.group(1).split("|")[-1]
+        b = re.fullmatch(r"(\w+) (\d+)", x)
+        if b and b.group(1) in LIVROS:
+            return f"{LIVROS[b.group(1)]} {_roman(int(b.group(2)))}"
+        return x
+    t = re.sub(r"\[\[([^\]]+)\]\]", link, t)
+    t = t.replace("*", "")
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def _md_rows(pars, q):
+    """[(latim, rótulo no formato inglês da fonte principal)] a partir do Markdown"""
+    if not MD_SRC:
+        return []
+    d, sig = MD_PARS[pars]
+    base = os.path.join(MD_SRC, d, f"Quaestio {q}")
+    if not os.path.isdir(base):
+        return []
+    out = []
+    pro = os.path.join(base, f"LEO {sig}, q. {q}.md")
+    if os.path.exists(pro):
+        txt = open(pro, encoding="utf-8").read().split("### Prooemium", 1)
+        if len(txt) == 2:
+            for par in txt[1].split("\n\n"):
+                par = par.strip()
+                if par and not par.startswith("!["):
+                    out.append((_md_clean(par), ""))
+    arts = sorted((int(re.search(r"a\. (\d+)\.md$", f).group(1)), f) for f in os.listdir(base)
+                  if re.search(r"a\. \d+\.md$", f))
+    for _, f in arts:
+        body = open(os.path.join(base, f), encoding="utf-8").read()
+        for blk in re.split(r"^###### ", body, flags=re.M)[1:]:
+            head, _, txt = blk.partition("\n")
+            head = head.strip()
+            if (m := re.fullmatch(r"arg\. (\d+)", head)):
+                lab = f"Objection {m.group(1)}"
+            elif head == "s.c.":
+                lab = "On the contrary"
+            elif head == "resp.":
+                lab = "I answer that"
+            elif (m := re.fullmatch(r"ad ?(\d*)", head)):
+                lab = f"Reply to Objection {m.group(1) or 1}"
+            else:
+                lab = ""
+            for par in txt.strip().split("\n\n"):
+                if par.strip():
+                    out.append((_md_clean(par), lab))
+                    lab = ""
+    return out
+
+
+def _qrows(src, pars, q):
+    rows = _rows(_qfile(src, pars, q))
+    return rows if _nwords(rows) > 30 else (_md_rows(pars, q) or rows)
+
+
 def _qfile(src, pars, q):
     return os.path.join(src, pars, f"{pars}{q:03d}.html")
 
@@ -92,7 +173,7 @@ def works(src):
     """lista de trabalhos para build_text.py (um por arquivo do leitor)"""
     out = []
     for pars, q0, q1, trat, desc in TRATADOS:
-        sizes = [(q, _nwords(_rows(_qfile(src, pars, q)))) for q in range(q0, q1 + 1)]
+        sizes = [(q, _nwords(_qrows(src, pars, q))) for q in range(q0, q1 + 1)]
         total = sum(n for _, n in sizes)
         nchunks = max(1, -(-total // MAX_WORDS))
         target = total / nchunks
@@ -138,7 +219,7 @@ def build_summa(work, doc):
     for q in work["qs"]:
         doc.heading(str(q), f"Questão {q}", str(q), 0)
         art = 0
-        for lat, lab in _rows(_qfile(work["fonte"], pars, q)):
+        for lat, lab in _qrows(work["fonte"], pars, q):
             m = re.match(r"Ad (\w+) sic proceditur", lat)
             if m:
                 art = ORD.get(m.group(1).lower(), art + 1)
