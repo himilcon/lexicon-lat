@@ -228,8 +228,8 @@ function viewHome() {
     ${hist.length ? `<h3 class="count">Consultados recentemente</h3><div class="chips">${hist.slice(0, 15).map(chip).join("")}</div>` : ""}
     <h3 class="count">Experimente</h3><div class="chips">${examples}<a href="#/acaso">ao acaso ↻</a></div>
     <h3 class="count">Ler textos</h3>
-    <a class="home-texts" href="#/textos"><span lang="la">Caesar · Cicero · Vergilius</span>
-      <span>César (<i>A Guerra da Gália</i>), Cícero (<i>Catilinárias</i>) e Virgílio (<i>Eneida</i>):
+    <a class="home-texts" href="#/textos"><span lang="la">Caesar · Cicero · Vergilius · Thomas de Aquino</span>
+      <span>César (<i>A Guerra da Gália</i>), Cícero (<i>Catilinárias</i>), Virgílio (<i>Eneida</i>) e Tomás de Aquino (<i>Suma Teológica</i>):
         toque em cada palavra para ver lema, análise e verbete →</span></a>`;
 }
 
@@ -379,6 +379,12 @@ function viewAbout() {
       por palavra, sem levar em conta o contexto: a primeira análise é só a mais provável. No teclado: <code>←</code> <code>→</code> mudam de palavra,
       <code>Esc</code> fecha o painel. O campo de referência leva a uma passagem: <code>1.1.1</code> em César, <code>1.1</code> nas
       Catilinárias, <code>6.851</code> na Eneida; links como <code>…/#/t/virgilio-eneida/6.851</code> também funcionam.</p>
+    <p>A <i>Suma Teológica</i> de Tomás de Aquino (edição leonina) está dividida por tratados, em
+      <a href="#/obra/tomas-suma">página própria</a>. Cada parágrafo traz a parte do artigo: <i>arg.</i> (objeção), <i>s. c.</i>
+      (sed contra), <i>co.</i> (corpo, “Respondeo”) e <i>ad</i> (resposta às objeções). As referências aceitam a forma usual:
+      <code>I q. 2 a. 3</code>, <code>I-II 90.4</code>, <code>III q. 75</code>. Para o latim escolástico, a análise acrescenta ao Morpheus
+      regras próprias: abreviaturas de citação (<i>Ethic.</i>, <i>Matth.</i>), compostos (<i>inquantum</i>, <i>huiusmodi</i>),
+      grafias medievais (<i>poenitentia</i>) e formas registradas no Lewis &amp; Short mas ausentes do Morpheus.</p>
 
     <h3>Instalar no iPhone / iPad</h3>
     <p>No Safari, toque em <b>Compartilhar</b> → <b>Adicionar à Tela de Início</b>. Os verbetes abertos e os textos lidos ficam guardados para uso sem internet.</p>
@@ -406,6 +412,7 @@ function route() {
   if (r !== "t" && typeof leaveReader === "function") leaveReader();
   switch (r) {
     case "textos": viewTexts(); break;
+    case "obra": viewObra(arg); break;
     case "t": viewReader(rest[0], rest.slice(1).join("/")); break;
     case "v": viewEntry(arg); break;
     case "lat": case "por": case "eng": viewSearch(r, arg); break;

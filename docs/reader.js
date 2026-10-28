@@ -25,11 +25,17 @@ function slash(s, map) {
   return s.split("/").map(x => map[x] || x).join(" ou ");
 }
 
+const readingsRaw = s => (s || "").split("|");
+
 function morphPT(m) {
   if (!m) return "";
   if (m === "enclitic") return "partícula enclítica, unida à palavra";
   if (m === "roman") return "algarismo romano";
   if (m === "abbreviation") return "abreviatura de prenome";
+  if (m === "citation") return "abreviatura numa citação";
+  if (m.startsWith("compound")) return "parte de palavra composta" + (m.includes(":") ? " (" + m.split(":")[1] + ")" : "");
+  if (m === "lsonly") return "forma de dicionário (sem análise morfológica do Morpheus)";
+  if (m === "guess") return "forma não reconhecida pelo Morpheus; lema provável";
   const ind = /^indeclform \(([^)]+)\)/.exec(m);
   if (ind) return INDECL[ind[1]] || "invariável";
   const t = m.split(/\s+/);
@@ -134,7 +140,26 @@ async function viewTexts() {
     return;
   }
   let lastAuthor = null;
-  const cards = idx.textos.map(t => {
+  const obras = new Map((idx.obras || []).map(o => [o.id, o]));
+  const shown = new Set();
+  const items = [];
+  for (const t of idx.textos) {
+    if (t.obra && obras.has(t.obra)) {
+      if (!shown.has(t.obra)) { shown.add(t.obra); items.push({ ...obras.get(t.obra), isObra: true }); }
+    } else items.push(t);
+  }
+  const cards = items.map(t => {
+    if (t.isObra) {
+      const head = t.autor !== lastAuthor ? `<li class="tauthor" lang="pt">${esc(t.autor)} <span lang="la">${esc(t.autorLa)}</span></li>` : "";
+      lastAuthor = t.autor;
+      return head + `<li class="tcard">
+      <a href="#/obra/${t.id}">
+        <span class="tcard-gr" lang="la">${esc(t.tituloLa)}</span>
+        <span class="tcard-pt">${esc(t.autor)}, <i>${esc(t.titulo)}</i></span>
+        <span class="tcard-desc">${esc(t.descricao)}</span>
+        <span class="tcard-meta">${esc(t.edicaoCurta)} · ${t.palavras.toLocaleString("pt-BR")} palavras · por tratados →</span>
+      </a></li>`;
+    }
     const head = t.autor !== lastAuthor ? `<li class="tauthor" lang="pt">${esc(t.autor)} <span lang="la">${esc(t.autorLa)}</span></li>` : "";
     lastAuthor = t.autor;
     const pos = store.get("lt.read." + t.id, null);
@@ -155,6 +180,71 @@ async function viewTexts() {
   </div>`;
 }
 
+/* ---------- página de uma obra dividida em vários arquivos (a Suma) ---------- */
+
+async function viewObra(id) {
+  setActiveLetter(null);
+  document.body.classList.remove("reading");
+  let idx;
+  try { idx = await loadTextIndex(); } catch (err) {
+    main.innerHTML = `<div class="empty">Não foi possível carregar a lista de textos (${esc(String(err.message || err))}).</div>`;
+    return;
+  }
+  const o = (idx.obras || []).find(x => x.id === id);
+  if (!o) { main.innerHTML = `<div class="empty">Obra não encontrada.</div>`; return; }
+  const parts = idx.textos.filter(t => t.obra === id);
+  let html = "", lastPars = null;
+  for (const t of parts) {
+    if (t.pars !== lastPars) {
+      if (lastPars !== null) html += "</ul>";
+      html += `<h3 class="obra-pars"><span lang="la">${esc(t.parsLa)}</span> · ${esc(t.parsPt)} (${esc(t.pars)})</h3><ul class="obra-list">`;
+      lastPars = t.pars;
+    }
+    const pos = store.get("lt.read." + t.id, null);
+    const rng = t.qmin === t.qmax ? `q. ${t.qmin}` : `qq. ${t.qmin}–${t.qmax}`;
+    html += `<li><a href="#/t/${t.id}"><span class="oq">${rng}</span><span class="ot">${esc(t.tratado)}</span>
+      <span class="om">${t.palavras.toLocaleString("pt-BR")} palavras${pos ? ` · parou em ${esc(pos)}` : ""}</span></a></li>`;
+  }
+  if (lastPars !== null) html += "</ul>";
+  main.innerHTML = `<div class="page">
+    <a class="rback" href="#/textos">← Textos</a>
+    <h2><span lang="la">${esc(o.tituloLa)}</span></h2>
+    <p class="home-intro">${esc(o.autor)}, <i>${esc(o.titulo)}</i>. ${esc(o.descricao)}
+      Cada tratado abre separadamente. Para ir direto a um artigo, digite a referência abaixo (por exemplo <i>I q. 2 a. 3</i>, <i>I-II 90.4</i> ou <i>III q. 75</i>).</p>
+    <form class="rgo" id="ogo"><input id="ogo-in" placeholder="I q. 2 a. 3" aria-label="Referência" autocomplete="off" spellcheck="false"><button>ir</button></form>
+    ${html}
+    <p class="rsrc">A <i>Supplementum</i> (completada pelos discípulos de Tomás a partir do Comentário às Sentenças) não está incluída.</p>
+  </div>`;
+  $("#ogo").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const go = summaTarget($("#ogo-in").value, parts, null);
+    if (go) location.hash = go; else toast("Referência não encontrada. Use, por exemplo, I q. 2 a. 3 ou I-II 90.4.");
+  });
+}
+
+/* "I-II q. 90 a. 4", "II-II 23.1", "q2a3", "2.3" → {pars, q, a} */
+function parseSummaRef(t) {
+  t = t.trim().replace(/[“”"]/g, "");
+  let pars = null;
+  const pm = /^(I-II|II-II|1-2|2-2|III|I)(?=[\s,.q\d]|$)\s*[,.]?\s*/i.exec(t);
+  if (pm) {
+    pars = { "1-2": "I-II", "2-2": "II-II" }[pm[1]] || pm[1].toUpperCase();
+    t = t.slice(pm[0].length);
+  }
+  const m = /^(?:q(?:uaestio|u)?\.?\s*)?(\d+)(?:\s*[,.]?\s*(?:a(?:rt(?:iculus)?)?\.?\s*)?(\d+))?/i.exec(t.replace(/\s+/g, " "));
+  if (!m) return null;
+  return { pars, q: +m[1], a: m[2] ? +m[2] : null };
+}
+
+function summaTarget(text, parts, curPars) {
+  const r = parseSummaRef(text);
+  if (!r) return null;
+  const pars = r.pars || curPars || "I";
+  const t = parts.find(p => p.pars === pars && r.q >= p.qmin && r.q <= p.qmax);
+  if (!t) return null;
+  return `#/t/${t.id}/${r.q}${r.a ? "." + r.a : ""}`;
+}
+
 /* ---------- leitor ---------- */
 
 async function viewReader(id, target) {
@@ -168,11 +258,21 @@ async function viewReader(id, target) {
       return;
     }
     if (location.hash.split("/")[2] !== id) return;
-    R = { id, doc, sel: -1, entry: null, part: -1, full: false };
+    R = { id, doc, sel: -1, entry: null, part: -1, full: false, siblings: {} };
+    if (doc.meta.obra) {
+      const parts = (await loadTextIndex()).textos.filter(t => t.obra === doc.meta.obra);
+      const k = parts.findIndex(t => t.id === id);
+      R.siblings = { prev: parts[k - 1], next: parts[k + 1] };
+    }
     renderReader();
   }
   const ref = target ? resolveRef(target) : null;
   if (target && !ref) {
+    if (R.doc.meta.obra) {
+      const parts = (await loadTextIndex()).textos.filter(t => t.obra === R.doc.meta.obra);
+      const go = summaTarget(target, parts, R.doc.meta.pars);
+      if (go && !go.startsWith(`#/t/${R.id}/`)) { location.replace(go); return; }
+    }
     showPart(R.part >= 0 ? R.part : 0);
     toast(`Referência “${target}” não encontrada neste texto.`);
     return;
@@ -188,6 +288,11 @@ async function viewReader(id, target) {
 }
 
 function resolveRef(t) {
+  if (R.doc.meta.obra) {
+    const r = parseSummaRef(t);
+    if (r && (!r.pars || r.pars === R.doc.meta.pars)) t = r.q + (r.a ? "." + r.a : "");
+    else if (r) return null;
+  }
   t = t.trim().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".");
   const { refPart, refs } = R.doc;
   if (refPart.has(t)) return t;
@@ -214,16 +319,17 @@ function renderReader() {
   const { doc } = R;
   const m = doc.meta;
   const last = store.get("lt.read." + R.id, null);
-  const partLabel = R.id.startsWith("cicero") ? "Discursos" : "Livros";
+  const partLabel = m.obra ? "Questões" : R.id.startsWith("cicero") ? "Discursos" : "Livros";
+  const chapLabel = m.obra ? "Artigos" : "Capítulos";
   main.innerHTML = `
     <div class="reader">
       <div class="rcol">
         <header class="rhead">
-          <a class="rback" href="#/textos">← Textos</a>
-          <div class="rmeta"><span lang="la">${esc(m.autorLa)}</span> · ${esc(m.autor)}, <i>${esc(m.titulo)}</i>${m.edicaoCurta ? ` <span class="rmeta-ed">(${esc(m.edicaoCurta)})</span>` : ""}</div>
+          ${m.obra ? `<a class="rback" href="#/obra/${esc(m.obra)}">← Suma Teológica</a>` : `<a class="rback" href="#/textos">← Textos</a>`}
+          <div class="rmeta"><span lang="la">${esc(m.autorLa)}</span> · ${esc(m.autor)}, <i>${esc(m.titulo)}</i>${m.tratado ? ` · ${esc(m.tratado)}` : ""}${m.edicaoCurta ? ` <span class="rmeta-ed">(${esc(m.edicaoCurta)})</span>` : ""}</div>
           <nav class="rcaps" id="rparts" data-label="${partLabel}" aria-label="${partLabel}">${doc.parts.length > 1
             ? doc.parts.map((p, i) => `<a href="#/t/${R.id}/${esc(p.c)}" data-p="${i}" title="${esc(p.rot)}">${esc(p.chip)}</a>`).join("") : ""}</nav>
-          <nav class="rcaps rsub" id="rchaps" data-label="Capítulos" aria-label="Capítulos"></nav>
+          <nav class="rcaps rsub" id="rchaps" data-label="${chapLabel}" aria-label="${chapLabel}"></nav>
           <div class="rtools">
             <form class="rgo" id="rgo"><input id="rgo-in" placeholder="${esc(m.referencia)}: ${esc(m.exemploRef || "")}" aria-label="Ir para a referência (${esc(m.referencia)})" autocomplete="off" spellcheck="false" inputmode="decimal"><button>ir</button></form>
             ${last ? `<a class="rcont" href="#/t/${R.id}/${esc(last)}">continuar em ${esc(last)} →</a>` : ""}
@@ -233,6 +339,7 @@ function renderReader() {
         <nav class="rpager" id="rpager"></nav>
         <footer class="rsrc">
           <p><b>Texto:</b> ${esc(m.edicao)} Transcrição digital: <a href="${esc(m.fonteTexto.url)}" target="_blank" rel="noopener">${esc(m.fonteTexto.nome)}</a>, ${esc(m.fonteTexto.licenca)}.</p>
+          ${m.obra ? `<p><b>Licença do texto:</b> ${esc(m.fonteTexto.licenca)}.</p>` : ""}
           <p><b>Lemas e morfologia:</b> <a href="${esc(m.fonteAnotacao.url)}" target="_blank" rel="noopener">${esc(m.fonteAnotacao.nome)}</a>. ${esc(m.fonteAnotacao.nota)}
             ${doc.estat.sem_analise.toLocaleString("pt-BR")} das ${doc.estat.palavras.toLocaleString("pt-BR")} palavras (sobretudo nomes próprios e numerais) ficaram sem análise e aparecem em cinza.</p>
           <p>${esc(m.notaEdicao)}</p>
@@ -269,6 +376,7 @@ function showPart(p) {
       if (typeof it === "string") inner += esc(it);
       else if (Array.isArray(it)) inner += `<span class="w${it[1].length ? "" : " nx"}" data-i="${wi++}">${esc(it[0])}</span>`;
       else if (it.br) inner += "<br>";
+      else if (it.lab) inner += `<span class="lab">${esc(it.lab)}</span> `;
       else if (it.s) {
         if (it.k === "ln") inner += `<a class="sec ln${it.d ? "" : " lnm"}" href="#/t/${R.id}/${esc(it.s)}" data-s="${esc(it.s)}" title="${esc(it.s)}">${esc(it.d || "")}</a>`;
         else inner += `<a class="sec" href="#/t/${R.id}/${esc(it.s)}" data-s="${esc(it.s)}" title="${esc(it.s)}">${esc(it.d || it.s)}</a>`;
@@ -280,10 +388,12 @@ function showPart(p) {
   main.querySelectorAll("#rparts a[data-p]").forEach(a => a.classList.toggle("on", +a.dataset.p === p));
   $("#rchaps").innerHTML = part.chapters.map(c => `<a href="#/t/${R.id}/${esc(c.c)}">${esc(c.chip)}</a>`).join("");
   const prev = doc.parts[p - 1], next = doc.parts[p + 1];
-  $("#rpager").innerHTML = doc.parts.length > 1
-    ? `${prev ? `<a href="#/t/${R.id}/${esc(prev.c)}">← ${esc(prev.rot)}</a>` : "<span></span>"}
-       ${next ? `<a href="#/t/${R.id}/${esc(next.c)}">${esc(next.rot)} →</a>` : "<span></span>"}`
-    : "";
+  const sib = R.siblings || {};
+  const prevL = prev ? `<a href="#/t/${R.id}/${esc(prev.c)}">← ${esc(prev.rot)}</a>`
+    : sib.prev ? `<a href="#/t/${sib.prev.id}">← ${esc(sib.prev.pars)}, ${esc(sib.prev.tratado)}</a>` : "<span></span>";
+  const nextL = next ? `<a href="#/t/${R.id}/${esc(next.c)}">${esc(next.rot)} →</a>`
+    : sib.next ? `<a href="#/t/${sib.next.id}">${esc(sib.next.pars)}, ${esc(sib.next.tratado)} →</a>` : "<span></span>";
+  $("#rpager").innerHTML = doc.parts.length > 1 || sib.prev || sib.next ? prevL + nextL : "";
 }
 
 function partOfWord(i) {
@@ -373,7 +483,7 @@ function renderPanel() {
       ${readings.length ? `<ul class="morphs">${readings.map(r => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
       ${gl ? `<div class="angl${ptOf(ix) ? "" : " en"}">${esc(gl.length > 160 ? gl.slice(0, 157) + "…" : gl)}</div>` : ""}
       ${k === 0 && n > 1 ? `<div class="occ"><button class="btn-link" data-occ="${li}">${n} ocorrências no texto</button></div>` : ""}
-      ${ix === undefined && a[0] !== undefined && !/^\d+$/.test(lemma) ? `<div class="miss">Lema sem verbete no Lewis &amp; Short. <a href="https://logeion.uchicago.edu/${encodeURIComponent(lemma)}" target="_blank" rel="noopener">Logeion ↗</a></div>` : ""}
+      ${ix === undefined && !/^\d+$/.test(lemma) && !readingsRaw(M[mi]).includes("citation") ? `<div class="miss">Lema sem verbete no Lewis &amp; Short. <a href="https://logeion.uchicago.edu/${encodeURIComponent(lemma)}" target="_blank" rel="noopener">Logeion ↗</a></div>` : ""}
     </div>`;
   }).join("");
 
@@ -408,7 +518,7 @@ function renderPanel() {
     </div>
     ${rows ? `<div class="ans">${rows}</div>` : ""}
     ${entryHtmlStr}
-    <div class="rp-note">Análise automática do Morpheus, palavra por palavra, sem desambiguação pelo contexto.
+    <div class="rp-note">Análise automática${R.doc.meta.obra ? " (Morpheus, com regras próprias para o latim escolástico)" : " do Morpheus"}, palavra por palavra, sem desambiguação pelo contexto.
       Traduções em português geradas por IA: confira no verbete.</div>`;
   p.hidden = false;
   p.scrollTop = 0;

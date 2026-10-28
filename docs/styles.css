@@ -332,3 +332,15 @@ body.reading main { max-width: 1240px; }
 .rtext .sec.ln { display: inline-block; width: 0; overflow: visible; white-space: nowrap; position: relative; left: -2.6em; vertical-align: baseline; font-size: 12px; color: var(--ink-soft); line-height: inherit; padding: 0; }
 .rtext p.verse { padding-left: 2.4em; }
 .rtext .sec.lnm { visibility: hidden; }
+
+/* ---------- obras em vários arquivos (Suma) ---------- */
+.obra-pars { font-size: 17px; margin: 22px 0 6px; }
+.obra-list { list-style: none; margin: 0; padding: 0; }
+.obra-list li { border-bottom: 1px solid var(--rule); }
+.obra-list a { display: grid; grid-template-columns: 7.5em 1fr auto; gap: 10px; align-items: baseline; padding: 8px 4px; color: var(--ink); }
+.obra-list a:hover { background: var(--paper-2); text-decoration: none; }
+.obra-list .oq { color: var(--accent); font-variant-numeric: tabular-nums; }
+.obra-list .om { font-size: 13px; color: var(--ink-soft); }
+@media (max-width: 560px) { .obra-list a { grid-template-columns: 6em 1fr; } .obra-list .om { grid-column: 2; } }
+.page .rgo { margin: 10px 0 4px; }
+.rtext .lab { font-size: 13px; letter-spacing: .04em; color: var(--accent); font-style: italic; }

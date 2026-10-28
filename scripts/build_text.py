@@ -5,7 +5,7 @@ palavra analisada pelo Morpheus (Perseus) e ligada ao verbete do Lewis & Short.
 A análise é feita por consulta de formas, sem desambiguação pelo contexto: cada palavra traz todas
 as análises possíveis, ordenadas pela frequência do lema no conjunto dos textos.
 
-Uso: python3 scripts/build_text.py <pasta canonical-latinLit/data> docs
+Uso: python3 scripts/build_text.py <pasta canonical-latinLit/data> docs [<pasta AquinasOperaOmnia/summa>]
 """
 import collections
 import hashlib
@@ -19,11 +19,18 @@ import unicodedata
 from lxml import etree
 
 SRC, OUT = sys.argv[1], sys.argv[2]
+SUMMA = sys.argv[3] if len(sys.argv) > 3 else None
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import summa  # noqa: E402
+import latim_medieval as LM  # noqa: E402
 MORPH = pickle.load(open(os.path.join(HERE, "morph.pkl"), "rb"))
 LSKEYS = json.load(open(os.path.join(HERE, "ls_keys.json"), encoding="utf-8"))   # id -> [chave, chave normalizada]
 INDEX = json.load(open(os.path.join(OUT, "data", "index.json"), encoding="utf-8"))["entries"]
 HEAD = {e[0]: e[2] for e in INDEX}
+GRAM = {e[0]: e[3] for e in INDEX}
+ENG = {e[0]: e[4] for e in INDEX}
+INDECL_GRAM = {"", "adv.", "prep.", "conj.", "interj.", "adv., prep.", "indecl."}
 BY_KEY = collections.defaultdict(list)
 for i, (k, nk) in LSKEYS.items():
     BY_KEY[k].append(i)
@@ -69,6 +76,13 @@ WORD = re.compile(r"[A-Za-zÀ-ÿ]+")
 
 
 def lookup(form):
+    # palavra em maiúscula no início da frase (Cum, Circa): junta as análises da forma minúscula, que vêm
+    # primeiro, às do nome próprio homógrafo (Cos, Circe)
+    if form[:1].isupper() and not form.isupper():
+        low = MORPH.get(form.lower(), [])
+        cap = MORPH.get(form, [])
+        if low or cap:
+            return list(low) + [a for a in cap if a not in low]
     for f in (form, form.lower(), form[:1].upper() + form[1:].lower()):
         if f in MORPH:
             return MORPH[f]
@@ -123,6 +137,13 @@ PRAENOMEN = {"A": "Aulus", "C": "Gaius", "Cn": "Gnaeus", "D": "Decimus", "L": "L
              "Sp": "Spurius", "T": "Titus", "Ti": "Tiberius", "K": "Kaeso", "Kal": "Kalendae"}
 # adjetivos ou nomes raros que nenhuma forma distingue de um substantivo comum (Gallia × Gallius)
 PENALTY = {"Gallius#2": 0.05, "Gallius#1": 0.05, "Troius": 0.2, "germanus": 0.5}
+# homógrafos raros (nomes próprios, verbos de sentido raro) que empatam com palavras comuns
+ID_PENALTY = {"357": 0.05, "8091": 0.02, "11379": 0.02, "1895": 0.02, "43274": 0.02, "32866": 0.02,
+              "37286": 0.02, "8085": 0.02, "12360": 0.3}
+# na Suma, substantivos técnicos preferidos ao particípio ou verbo homógrafo (actus, habitus, intellectus…)
+GROUP_BOOST = {"tomas-suma": {i: 20 for i in (
+    "636", "20093", "24109", "29779", "3151", "15204", "42500", "18566", "37285", "32947", "11508",
+    "37388", "32865", "43664", "45298", "49973", "356", "39974", "50588", "44684")}}
 ROMAN_RE = re.compile(r"^(M{0,4})(CM|CD|D?C{0,4})(XC|XL|L?X{0,4})(IX|IV|V?I{0,4})$")
 RV = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1}
 
@@ -146,6 +167,21 @@ def analyze(form, nxt=""):
         ind = [m for _, _, m in out if m.startswith("indeclform")]
         if ind:
             out.insert(0, (k, BY_KEY[k][0], ind[0]))
+    # palavras invariáveis do L&S que o Morpheus não oferece (circa "ao redor"; cum "quando"):
+    # entram primeiro se as outras análises forem só formas verbais de 1ª/2ª pessoa ou imperativos
+    if out:
+        have = {i for _, i, _ in out}
+        extra = []
+        for key in [k] + [k + str(n) for n in range(1, 5)]:
+            for i in BY_KEY.get(key, []):
+                if i not in have and GRAM.get(i, "x") in INDECL_GRAM and ENG.get(i):
+                    kind = {"adv.": "adverb", "prep.": "prep", "conj.": "conj", "interj.": "exclam"}.get(GRAM.get(i, ""), "indecl")
+                    extra.append((HEAD.get(i, key), i, f"indeclform ({kind}) ls"))
+        if extra:
+            if all(re.search(r"imperat|1st|2nd", m) for _, _, m in out):
+                out = extra + out
+            else:
+                out = out + extra
     return out
 
 
@@ -156,6 +192,10 @@ def _analyze(form, nxt):
         if an:
             return [(a[0], a[1], "abbreviation") for a in an[:1]]
         return [(full, None, "abbreviation")]
+    if nxt.startswith(".") and form in LM.CITACAO:
+        return [(LM.CITACAO[form], None, "citation")]
+    if form.lower() in LM.COMPOSTOS:
+        return _medieval(form)
     if form.isupper() and (len(form) > 1 or nxt[:1] in (" ", ",", ".", "")) and roman(form):
         return [(str(roman(form)), None, "roman")]
     plain = unicodedata.normalize("NFD", form)
@@ -174,6 +214,39 @@ def _analyze(form, nxt):
                 an = lookup(g)
                 if an:
                     return list(an)
+    return _medieval(form)
+
+
+def _ls_id(key):
+    ids = BY_KEY.get(key) or BY_KEY.get(key + "1") or BY_NORM.get(norm(key)) or []
+    return ids[0] if ids else None
+
+
+def _medieval(form):
+    """formas que o Morpheus não reconhece: compostos, grafias medievais, verbetes só do L&S"""
+    low = form.lower()
+    if low in LM.COMPOSTOS:
+        return [(lem, _ls_id(key), "compound" + (":" + lab if lab else "")) for lem, key, lab in LM.COMPOSTOS[low]]
+    for v in LM.variantes(form):
+        an = lookup(v)
+        if an:
+            return list(an)
+        for enc in ("que", "ne", "ve"):
+            if v.lower().endswith(enc) and len(v) > len(enc) + 1:
+                base = lookup(v[: -len(enc)])
+                if base:
+                    return list(base) + [("-" + enc, ENCL_ID[enc], "enclitic")]
+    cands = [form] + LM.variantes(form)
+    for c in cands:
+        ids = BY_NORM.get(norm(c)) if len(c) >= 3 else None
+        if ids:
+            return [(HEAD.get(i, c), i, "lsonly") for i in ids[:2]]
+    if len(form) >= 5:
+        for c in cands:
+            for g in LM.flexao_candidatas(c):
+                ids = BY_NORM.get(norm(g))
+                if ids:
+                    return [(HEAD.get(ids[0], g), ids[0], "guess")]
     return []
 
 
@@ -338,7 +411,21 @@ def build_vergil(root, doc):
 
 # ---------- montagem ----------
 
+OBRAS = [{
+    "id": summa.OBRA, "autor": "Tomás de Aquino", "autorLa": "S. Thomas de Aquino",
+    "titulo": "Suma Teológica", "tituloLa": "Summa Theologiae", "edicaoCurta": "Leonina",
+    "descricao": "A suma da teologia de Tomás de Aquino (1265–1273), em questões e artigos: Deus e a criação (I), "
+                 "o fim do homem, os atos humanos, as virtudes, a lei e a graça (I-II, II-II), Cristo e os sacramentos (III). "
+                 "Texto completo das partes escritas por Tomás, dividido por tratados.",
+}]
+
+
 def build(work):
+    if work["tipo"] == "summa":
+        doc = Doc()
+        summa.build_summa(work, doc)
+        doc.close()
+        return doc
     path = os.path.join(SRC, work["arquivo"])
     root = etree.parse(path, etree.XMLParser(remove_blank_text=False, recover=True)).getroot()
     body = root.find(".//{*}body")
@@ -349,7 +436,8 @@ def build(work):
 
 
 def main():
-    docs = [(w, build(w)) for w in WORKS]
+    works = WORKS + (summa.works(SUMMA) if SUMMA else [])
+    docs = [(w, build(w)) for w in works]
 
     # frequência dos lemas no conjunto dos textos, estimada por EM: cada palavra ambígua divide sua
     # ocorrência entre os lemas possíveis na proporção da frequência atual de cada um. O ponto de partida
@@ -360,7 +448,8 @@ def main():
         for k, v in json.load(open(os.path.join(OUT, "data", "ls", fn), encoding="utf-8")).items():
             size[k] = len(v)
     occ = []
-    for _, d in docs:
+    for wk_, d in docs:
+        grp = wk_.get("grupo", "classicos")
         for b in d.blocks:
             x = b.get("x", [])
             for j, it in enumerate(x):
@@ -370,30 +459,39 @@ def main():
                     an = analyze(it[2] or it[1], nxt)
                     lems = sorted({(a[0], a[1]) for a in an if not a[0].startswith("-") and a[2] not in ("roman",)})
                     if lems:
-                        occ.append(lems)
+                        occ.append((grp, lems))
     import math
     freq = collections.Counter()
     prior = {}
-    for lems in occ:
+    for _, lems in occ:
         for l in lems:
             prior[l] = math.log(2 + size.get(l[1] or "", 0))
     # peso de cada lema: ocorrências não ambíguas nos textos + um pouco das ambíguas + tamanho do verbete.
     # (Um EM puro concentra a massa em verbos raros que aparecem em muitas posições ambíguas: ito "ir"
     # absorvia ita, itaque, item, iter.)
-    unamb = collections.Counter()
-    shared = collections.Counter()
-    for lems in occ:
-        if len(lems) == 1:
-            unamb[lems[0]] += 1
-        else:
-            for l in lems:
-                shared[l] += 1 / len(lems)
-    w = {l: unamb[l] + 0.1 * shared[l] + 0.2 * prior[l] for l in prior}
+    # Os pesos são calculados por grupo (os clássicos juntos; a Suma à parte), para que o vocabulário
+    # escolástico não altere a ordem das análises em César, Cícero e Virgílio, e vice-versa.
+    W = {}
+    for g in sorted({g for g, _ in occ}):
+        unamb = collections.Counter()
+        shared = collections.Counter()
+        for gg, lems in occ:
+            if gg != g:
+                continue
+            if len(lems) == 1:
+                unamb[lems[0]] += 1
+            else:
+                for l in lems:
+                    shared[l] += 1 / len(lems)
+        W[g] = {l: unamb[l] + 0.1 * shared[l] + 0.2 * prior[l] for l in prior}
 
     os.makedirs(os.path.join(OUT, "textos"), exist_ok=True)
     meta_list = []
     vocab = collections.Counter()   # id do L&S -> ocorrências (para priorizar a tradução PT)
+    vocab_g = collections.defaultdict(collections.Counter)
     for wk, d in docs:
+        grp = wk.get("grupo", "classicos")
+        w = W[grp]
         lemas, lem_ix = [], {}
         morfs, morf_ix = [], {}
 
@@ -438,25 +536,33 @@ def main():
                         # a própria forma é a de dicionário (ita, sine, nisi, iter, castra): forte indício
                         first = False
                         if i and LSKEYS.get(i) and re.sub(r"\d+$", "", LSKEYS[i][1]) == fn:
-                            if any(m.startswith("indeclform") and "exclam" not in m for m in ms):
+                            if any(m.startswith("indeclform") and "exclam" not in m and not m.endswith(" ls") for m in ms):
                                 sc *= 10           # palavra invariável cuja forma é a própria entrada (sine, ita)
                             elif any("nom" in m for m in ms):
                                 sc *= 3            # nominativo igual à entrada (castra, iter)
-                        sc *= PENALTY.get(l, 1)
+                        sc *= PENALTY.get(l, 1) * ID_PENALTY.get(i or "", 1)
+                        sc *= GROUP_BOOST.get(grp, {}).get(i or "", 1)
+                        # texto expositivo em 3ª pessoa: formas só de 1ª/2ª pessoa ou imperativo são improváveis
+                        if grp == "tomas-suma" and all(re.search(r"imperat|1st|2nd", m) for m in ms):
+                            sc *= 0.05
                         return (l.startswith("-"), not first, -sc)
                     order = sorted(groups.items(), key=score)
                     item = [form, [[lem_index(l, i), morf_index("|".join(dict.fromkeys(ms)))] for (l, i), ms in order]]
                     if order and order[0][0][1]:
                         vocab[order[0][0][1]] += 1
+                        vocab_g[wk.get("grupo", "classicos")][order[0][0][1]] += 1
                     nx.append(item)
                 else:
                     nx.append(it)
             b["x"] = nx
         meta = {k: wk[k] for k in ("id", "autor", "autorLa", "titulo", "tituloLa", "cts", "edicao", "edicaoCurta",
                                   "referencia", "exemploRef", "notaEdicao", "descricao")}
-        meta["fonteTexto"] = {"nome": "Perseus Digital Library (canonical-latinLit)",
-                              "url": "https://github.com/PerseusDL/canonical-latinLit/blob/master/data/" + wk["arquivo"],
-                              "licenca": "CC BY-SA 4.0"}
+        meta["fonteTexto"] = wk.get("fonteTexto") or {
+            "nome": "Perseus Digital Library (canonical-latinLit)",
+            "url": "https://github.com/PerseusDL/canonical-latinLit/blob/master/data/" + wk["arquivo"],
+            "licenca": "CC BY-SA 4.0"}
+        OBRA_KEYS = ("obra", "pars", "parsLa", "parsPt", "qmin", "qmax", "tratado")
+        meta |= {k: wk[k] for k in OBRA_KEYS if k in wk}
         meta["fonteAnotacao"] = {"nome": "Morpheus (Perseus Digital Library), via dados do Diogenes",
                                  "url": "https://github.com/perseids-tools/morpheus", "licenca": "ver LICENSE-DATA.md",
                                  "nota": "Análise por consulta de formas, sem desambiguação pelo contexto: todas as análises possíveis são mostradas, a mais provável primeiro."}
@@ -469,12 +575,19 @@ def main():
             f.write(s)
         ver = hashlib.sha1(s.encode()).hexdigest()[:10]
         meta_list.append({k: wk[k] for k in ("id", "autor", "autorLa", "titulo", "tituloLa", "descricao", "edicaoCurta")}
-                         | {"palavras": total, "versao": ver})
+                         | {k: wk[k] for k in OBRA_KEYS if k in wk} | {"palavras": total, "versao": ver})
         print(f"{wk['id']}: {total} palavras, {miss} sem análise ({miss / total:.1%}), {nlem} lemas, {sem} sem verbete")
     with open(os.path.join(OUT, "textos", "index.json"), "w", encoding="utf-8") as f:
-        json.dump({"textos": meta_list}, f, ensure_ascii=False, indent=1)
+        obras = []
+        for o in OBRAS:
+            parts = [t for t in meta_list if t.get("obra") == o["id"]]
+            if parts:
+                obras.append(o | {"palavras": sum(t["palavras"] for t in parts)})
+        json.dump({"textos": meta_list, "obras": obras}, f, ensure_ascii=False, indent=1)
     with open(os.path.join(HERE, "vocab_textos.json"), "w", encoding="utf-8") as f:
         json.dump(vocab.most_common(), f)
+    with open(os.path.join(HERE, "vocab_grupos.json"), "w", encoding="utf-8") as f:
+        json.dump({g: c.most_common() for g, c in vocab_g.items()}, f)
 
 
 def build_forms():

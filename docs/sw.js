@@ -1,6 +1,6 @@
 /* Service worker: guarda a aplicação, o índice, os verbetes abertos e os textos para uso offline.
    O corpo dos verbetes (data/ls/NNN.json, 53 MB no total) é guardado à medida que é consultado. */
-const VERSION = "lt-v1";                    // aplicação: mude a cada alteração de HTML/CSS/JS
+const VERSION = "lt-v2";                    // aplicação: mude a cada alteração de HTML/CSS/JS
 const DATA_CACHE = "lt-data-ls-2026-10-1";  // dicionário: mude junto com DATA_VER em app.js
 const TEXT_CACHE = "lt-textos";
 const SHELL = ["./", "index.html", "styles.css", "app.js", "reader.js", "manifest.webmanifest",

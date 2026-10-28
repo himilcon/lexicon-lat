@@ -15,12 +15,14 @@ Site: https://himilcon.github.io/lexicon-lat/
 - Busca em latim **com ou sem quantidades** (`amo`, `ămo`); `j`/`i` e `v`/`u` são equivalentes.
 - Busca por **formas flexionadas** (`amabant` → *amo*, `virum` → *vir*), com as análises do Morpheus.
 - Busca reversa em **português** (nas traduções) e em **inglês** (nos resumos).
-- No alto de cada verbete, **resumo em português** gerado por IA (2.048 verbetes nesta versão, que cobrem
-  cerca de 89% das palavras dos textos do leitor); nos demais, resumo em inglês.
+- No alto de cada verbete, **resumo em português** gerado por IA (3.248 verbetes nesta versão, que cobrem
+  cerca de 90% das palavras dos textos clássicos e 95% das da Suma); nos demais, resumo em inglês.
 - Verbete completo do Lewis & Short, com acepções em níveis, citações e referências.
 - Botões **ver no Gaffiot** (gaffiot.fr) e **Logeion**.
 - Favoritos, histórico, navegação alfabética, tema claro/escuro, links diretos (`…/#/v/2280` = *amo*).
-- **Textos** (`#/textos`): César, *De Bello Gallico*; Cícero, *Catilinárias*; Virgílio, *Eneida*.
+- **Textos** (`#/textos`): César, *De Bello Gallico*; Cícero, *Catilinárias*; Virgílio, *Eneida*;
+  Tomás de Aquino, *Suma Teológica* (I, I-II, II-II, III; 1,5 milhão de palavras, em 56 arquivos por
+  tratado, página própria em `#/obra/tomas-suma`; referências como `I q. 2 a. 3` ou `I-II 90.4`).
   Toque numa palavra para ver os lemas possíveis, a análise morfológica em português, a tradução e o
   verbete. Referências diretas: `#/t/cesar-guerra-gaulesa/1.1.1`, `#/t/cicero-catilinarias/1.1`,
   `#/t/virgilio-eneida/6.851`.
@@ -66,7 +68,9 @@ python3 scripts/build_morph.py /tmp/diog/dependencies/data
 # Textos
 git clone --depth 1 --filter=blob:none --sparse https://github.com/PerseusDL/canonical-latinLit /tmp/latlit
 git -C /tmp/latlit sparse-checkout set data/phi0448/phi001 data/phi0474/phi013 data/phi0690/phi003
-python3 scripts/build_text.py /tmp/latlit/data docs
+git clone --depth 1 --filter=blob:none --sparse https://github.com/Geremia/AquinasOperaOmnia /tmp/aq
+git -C /tmp/aq sparse-checkout set summa
+python3 scripts/build_text.py /tmp/latlit/data docs /tmp/aq/summa
 
 # Camada em português
 python3 scripts/build_pt.py
