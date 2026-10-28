@@ -60,6 +60,26 @@ divisão em palavras e ligação a lemas e verbetes. A análise morfológica usa
 próprias para o latim escolástico (abreviaturas de citação, compostos, grafias medievais), descritas em
 `scripts/latim_medieval.py`.
 
+## Suma contra os Gentios e De ente et essentia — `docs/textos/tomas-scg-*.json`, `docs/textos/tomas-de-ente.json`
+
+Tomás de Aquino, *Summa contra Gentiles* (edição leonina, t. 13–15, 1918–1930) e *De ente et essentia*
+(edição leonina, t. 43, 1976), tomados da coluna latina das páginas bilíngues de
+[Geremia/AquinasOperaOmnia](https://github.com/Geremia/AquinasOperaOmnia) (`ContraGentiles1–4.htm`,
+`DeEnte&Essentia.htm`). Valem as mesmas observações da Suma Teológica sobre a transcrição digital.
+**Ponto a verificar antes de uso comercial (específico do De ente):** a edição leonina do *De ente* é de
+1976 e pode ainda estar protegida como edição crítica em algumas jurisdições; isso é uma suposição a
+verificar, não uma conclusão. Para a SCG, a edição tem mais de 90 anos (inferência: domínio público).
+
+Modificações: divisão por livros e capítulos; numeração dos parágrafos tomada da coluna inglesa;
+capítulos que a fonte funde ou deixa sem a linha “Caput N” (I 37 e 52; II 14, 19, 29 e 81) foram
+separados pela numeração; alguns capítulos ficaram sem título latino porque a fonte não o traz.
+
+## Léxico escolástico — `scripts/escolastico.py` e os campos de glosa nos textos de Tomás
+
+Lista de cerca de 150 termos escolásticos ausentes do Lewis & Short ou do Morpheus (quidditas,
+sensitivus, totaliter, causo…), com flexão gerada por regras e glosa em português **gerada por IA**
+(Claude, da Anthropic), outubro de 2026. Distribuída sob CC BY-SA 4.0, como a camada em português.
+
 ## Morfologia — análises nos textos e `docs/data/formas.json`
 
 Análises geradas pelo [Morpheus](https://github.com/perseids-tools/morpheus) (Perseus Digital Library;

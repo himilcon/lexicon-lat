@@ -157,7 +157,7 @@ async function viewTexts() {
         <span class="tcard-gr" lang="la">${esc(t.tituloLa)}</span>
         <span class="tcard-pt">${esc(t.autor)}, <i>${esc(t.titulo)}</i></span>
         <span class="tcard-desc">${esc(t.descricao)}</span>
-        <span class="tcard-meta">${esc(t.edicaoCurta)} · ${t.palavras.toLocaleString("pt-BR")} palavras · por tratados →</span>
+        <span class="tcard-meta">${esc(t.edicaoCurta)} · ${t.palavras.toLocaleString("pt-BR")} palavras · ${esc(t.divisao || "em partes")} →</span>
       </a></li>`;
     }
     const head = t.autor !== lastAuthor ? `<li class="tauthor" lang="pt">${esc(t.autor)} <span lang="la">${esc(t.autorLa)}</span></li>` : "";
@@ -180,7 +180,7 @@ async function viewTexts() {
   </div>`;
 }
 
-/* ---------- página de uma obra dividida em vários arquivos (a Suma) ---------- */
+/* ---------- página de uma obra dividida em vários arquivos (as Sumas) ---------- */
 
 async function viewObra(id) {
   setActiveLetter(null);
@@ -193,6 +193,7 @@ async function viewObra(id) {
   const o = (idx.obras || []).find(x => x.id === id);
   if (!o) { main.innerHTML = `<div class="empty">Obra não encontrada.</div>`; return; }
   const parts = idx.textos.filter(t => t.obra === id);
+  const ex = o.refExemplos || ["I q. 2 a. 3", "I-II 90.4"];
   let html = "", lastPars = null;
   for (const t of parts) {
     if (t.pars !== lastPars) {
@@ -201,7 +202,9 @@ async function viewObra(id) {
       lastPars = t.pars;
     }
     const pos = store.get("lt.read." + t.id, null);
-    const rng = t.qmin === t.qmax ? `q. ${t.qmin}` : `qq. ${t.qmin}–${t.qmax}`;
+    const [u1, u2] = o.unidade || ["q.", "qq."];
+    const a = t.qmin === 0 ? "pr." : t.qmin;
+    const rng = t.qmin === t.qmax ? `${u1} ${a}` : `${t.qmin === 0 ? "pr., " + u2 + " 1" : u2 + " " + a}–${t.qmax}`;
     html += `<li><a href="#/t/${t.id}"><span class="oq">${rng}</span><span class="ot">${esc(t.tratado)}</span>
       <span class="om">${t.palavras.toLocaleString("pt-BR")} palavras${pos ? ` · parou em ${esc(pos)}` : ""}</span></a></li>`;
   }
@@ -210,15 +213,15 @@ async function viewObra(id) {
     <a class="rback" href="#/textos">← Textos</a>
     <h2><span lang="la">${esc(o.tituloLa)}</span></h2>
     <p class="home-intro">${esc(o.autor)}, <i>${esc(o.titulo)}</i>. ${esc(o.descricao)}
-      Cada tratado abre separadamente. Para ir direto a um artigo, digite a referência abaixo (por exemplo <i>I q. 2 a. 3</i>, <i>I-II 90.4</i> ou <i>III q. 75</i>).</p>
-    <form class="rgo" id="ogo"><input id="ogo-in" placeholder="I q. 2 a. 3" aria-label="Referência" autocomplete="off" spellcheck="false"><button>ir</button></form>
+      Cada parte abre separadamente. Para ir direto a um ponto, digite a referência abaixo (por exemplo ${ex.map(x => `<i>${esc(x)}</i>`).join(", ")}).</p>
+    <form class="rgo" id="ogo"><input id="ogo-in" placeholder="${esc(ex[0])}" aria-label="Referência" autocomplete="off" spellcheck="false"><button>ir</button></form>
     ${html}
-    <p class="rsrc">A <i>Supplementum</i> (completada pelos discípulos de Tomás a partir do Comentário às Sentenças) não está incluída.</p>
+    ${o.notaFinal ? `<p class="rsrc">${esc(o.notaFinal)}</p>` : ""}
   </div>`;
   $("#ogo").addEventListener("submit", ev => {
     ev.preventDefault();
-    const go = summaTarget($("#ogo-in").value, parts, null);
-    if (go) location.hash = go; else toast("Referência não encontrada. Use, por exemplo, I q. 2 a. 3 ou I-II 90.4.");
+    const go = obraTarget($("#ogo-in").value, parts, null, id);
+    if (go) location.hash = go; else toast(`Referência não encontrada. Use, por exemplo, ${ex.join(" ou ")}.`);
   });
 }
 
@@ -236,14 +239,37 @@ function parseSummaRef(t) {
   return { pars, q: +m[1], a: m[2] ? +m[2] : null };
 }
 
-function summaTarget(text, parts, curPars) {
-  const r = parseSummaRef(text);
+/* Suma contra os Gentios: "III, 65", "3.65", "l. 3 c. 65", "65" (no livro atual) → {pars, q} */
+const SCG = "tomas-scg";
+const ROM = { 1: "I", 2: "II", 3: "III", 4: "IV" }, ARAB = { I: 1, II: 2, III: 3, IV: 4 };
+function parseScgRef(t) {
+  t = t.trim().replace(/[“”"]/g, "").replace(/^(?:S\.?\s*)?C\.?\s*G\.?\s*/i, "");
+  let pars = null;
+  let m = /^(?:l(?:ib(?:er)?)?\.?\s*)?(IV|III|II|I)(?=[\s,.]|$)\s*[,.]?\s*/i.exec(t);
+  if (m) pars = m[1].toUpperCase();
+  else if ((m = /^(?:l(?:ib(?:er)?)?\.?\s*)?([1-4])(?:\s*[,.]\s*|\s+)(?=c|\d|p)/i.exec(t))) pars = ROM[m[1]];
+  if (m) t = t.slice(m[0].length);
+  const c = /^(?:c(?:ap(?:ut)?)?\.?\s*)?(\d+|pr(?:ol|ooemium)?\.?)/i.exec(t.trim());
+  if (!c) return null;
+  return { pars, q: /^\d/.test(c[1]) ? +c[1] : 0, a: null };
+}
+
+function obraRef(t, obra) { return obra === SCG ? parseScgRef(t) : parseSummaRef(t); }
+
+function obraRefStr(obra, pars, r) {
+  return obra === SCG ? `${ARAB[pars]}.${r.q === 0 ? "prol" : r.q}` : `${r.q}${r.a ? "." + r.a : ""}`;
+}
+
+function obraTarget(text, parts, curPars, obra) {
+  const r = obraRef(text, obra);
   if (!r) return null;
   const pars = r.pars || curPars || "I";
   const t = parts.find(p => p.pars === pars && r.q >= p.qmin && r.q <= p.qmax);
   if (!t) return null;
-  return `#/t/${t.id}/${r.q}${r.a ? "." + r.a : ""}`;
+  return `#/t/${t.id}/${obraRefStr(obra, pars, r)}`;
 }
+
+function summaTarget(text, parts, curPars) { return obraTarget(text, parts, curPars, "tomas-suma"); }
 
 /* ---------- leitor ---------- */
 
@@ -279,7 +305,7 @@ async function viewReader(id, target) {
   if (target && !ref) {
     if (R.doc.meta.obra) {
       const parts = (await loadTextIndex()).textos.filter(t => t.obra === R.doc.meta.obra);
-      const go = summaTarget(target, parts, R.doc.meta.pars);
+      const go = obraTarget(target, parts, R.doc.meta.pars, R.doc.meta.obra);
       if (go && !go.startsWith(`#/t/${R.id}/`)) { location.replace(go); return; }
     }
     showPart(R.part >= 0 ? R.part : 0);
@@ -297,9 +323,10 @@ async function viewReader(id, target) {
 }
 
 function resolveRef(t) {
-  if (R.doc.meta.obra) {
-    const r = parseSummaRef(t);
-    if (r && (!r.pars || r.pars === R.doc.meta.pars)) t = r.q + (r.a ? "." + r.a : "");
+  const mo = R.doc.meta;
+  if (mo.obra) {
+    const r = obraRef(t, mo.obra);
+    if (r && (!r.pars || r.pars === mo.pars)) t = obraRefStr(mo.obra, mo.pars, r);
     else if (r) return null;
   }
   t = t.trim().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".");
@@ -328,13 +355,13 @@ function renderReader() {
   const { doc } = R;
   const m = doc.meta;
   const last = store.get("lt.read." + R.id, null);
-  const partLabel = m.obra ? "Questões" : R.id.startsWith("cicero") ? "Discursos" : "Livros";
-  const chapLabel = m.obra ? "Artigos" : "Capítulos";
+  const partLabel = m.rotPartes || (m.obra ? "Questões" : R.id.startsWith("cicero") ? "Discursos" : "Livros");
+  const chapLabel = m.obra === "tomas-suma" ? "Artigos" : "Capítulos";
   main.innerHTML = `
     <div class="reader">
       <div class="rcol">
         <header class="rhead">
-          ${m.obra ? `<a class="rback" href="#/obra/${esc(m.obra)}">← Suma Teológica</a>` : `<a class="rback" href="#/textos">← Textos</a>`}
+          ${m.obra ? `<a class="rback" href="#/obra/${esc(m.obra)}">← ${esc(m.obraTitulo || "Suma Teológica")}</a>` : `<a class="rback" href="#/textos">← Textos</a>`}
           <div class="rmeta"><span lang="la">${esc(m.autorLa)}</span> · ${esc(m.autor)}, <i>${esc(m.titulo)}</i>${m.tratado ? ` · ${esc(m.tratado)}` : ""}${m.edicaoCurta ? ` <span class="rmeta-ed">(${esc(m.edicaoCurta)})</span>` : ""}</div>
           <nav class="rcaps" id="rparts" data-label="${partLabel}" aria-label="${partLabel}">${doc.parts.length > 1
             ? doc.parts.map((p, i) => `<a href="#/t/${R.id}/${esc(p.c)}" data-p="${i}" title="${esc(p.rot)}">${esc(p.chip)}</a>`).join("") : ""}</nav>
@@ -348,7 +375,6 @@ function renderReader() {
         <nav class="rpager" id="rpager"></nav>
         <footer class="rsrc">
           <p><b>Texto:</b> ${esc(m.edicao)} Transcrição digital: <a href="${esc(m.fonteTexto.url)}" target="_blank" rel="noopener">${esc(m.fonteTexto.nome)}</a>, ${esc(m.fonteTexto.licenca)}.</p>
-          ${m.obra ? `<p><b>Licença do texto:</b> ${esc(m.fonteTexto.licenca)}.</p>` : ""}
           <p><b>Lemas e morfologia:</b> <a href="${esc(m.fonteAnotacao.url)}" target="_blank" rel="noopener">${esc(m.fonteAnotacao.nome)}</a>. ${esc(m.fonteAnotacao.nota)}
             ${doc.estat.sem_analise.toLocaleString("pt-BR")} das ${doc.estat.palavras.toLocaleString("pt-BR")} palavras (sobretudo nomes próprios e numerais) ficaram sem análise e aparecem em cinza.</p>
           <p>${esc(m.notaEdicao)}</p>
@@ -476,13 +502,13 @@ function renderPanel() {
   const occ = li => (R.doc.byLemma.get(li) || []).length;
   const rows = an.map((a, k) => {
     const [li, mi] = a;
-    const [lemma, id] = L[li];
+    const [lemma, id, escGram, escGl] = L[li];
     const ix = id ? byId.get(id) : undefined;
     const on = R.entry && R.entry.lem === li;
     const readings = (M[mi] || "").split("|").map(morphPT).filter(Boolean);
     const n = occ(li);
-    const gram = ix !== undefined ? E[ix][3] : "";
-    const gl = ix !== undefined ? (ptOf(ix) || E[ix][4]) : "";
+    const gram = ix !== undefined ? E[ix][3] : (escGram || "");
+    const gl = ix !== undefined ? (ptOf(ix) || E[ix][4]) : (escGl || "");
     return `<div class="an${on ? " on" : ""}">
       <div class="an-top">
         ${ix !== undefined ? `<button class="lem" data-lem="${li}" lang="la">${esc(lemma)}${homNum(ix) ? `<sup>${homNum(ix)}</sup>` : ""}</button>` : `<span class="lem nolem" lang="la">${esc(lemma)}</span>`}
@@ -490,9 +516,9 @@ function renderPanel() {
         ${k === 0 && an.length > 1 ? `<span class="prob" title="Escolhida pela frequência do lema, sem olhar o contexto">mais provável</span>` : ""}
       </div>
       ${readings.length ? `<ul class="morphs">${readings.map(r => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
-      ${gl ? `<div class="angl${ptOf(ix) ? "" : " en"}">${esc(gl.length > 160 ? gl.slice(0, 157) + "…" : gl)}</div>` : ""}
+      ${gl ? `<div class="angl${ix === undefined || ptOf(ix) ? "" : " en"}">${esc(gl.length > 160 ? gl.slice(0, 157) + "…" : gl)}</div>` : ""}
       ${k === 0 && n > 1 ? `<div class="occ"><button class="btn-link" data-occ="${li}">${n} ocorrências no texto</button></div>` : ""}
-      ${ix === undefined && !/^\d+$/.test(lemma) && !readingsRaw(M[mi]).includes("citation") ? `<div class="miss">Lema sem verbete no Lewis &amp; Short. <a href="https://logeion.uchicago.edu/${encodeURIComponent(lemma)}" target="_blank" rel="noopener">Logeion ↗</a></div>` : ""}
+      ${ix === undefined && !/^\d+$/.test(lemma) && !readingsRaw(M[mi]).includes("citation") ? `<div class="miss">${escGl ? "Termo escolástico ausente do Lewis &amp; Short; glosa do léxico escolástico deste site (gerada por IA)." : "Lema sem verbete no Lewis &amp; Short."} <a href="https://logeion.uchicago.edu/${encodeURIComponent(lemma)}" target="_blank" rel="noopener">Logeion ↗</a></div>` : ""}
     </div>`;
   }).join("");
 

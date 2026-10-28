@@ -21,8 +21,10 @@ Site: https://himilcon.github.io/lexicon-lat/
 - Botões **ver no Gaffiot** (gaffiot.fr) e **Logeion**.
 - Favoritos, histórico, navegação alfabética, tema claro/escuro, links diretos (`…/#/v/2280` = *amo*).
 - **Textos** (`#/textos`): César, *De Bello Gallico*; Cícero, *Catilinárias*; Virgílio, *Eneida*;
-  Tomás de Aquino, *Suma Teológica* (I, I-II, II-II, III; 1,7 milhão de palavras, em 57 arquivos por
-  tratado, página própria em `#/obra/tomas-suma`; referências como `I q. 2 a. 3` ou `I-II 90.4`).
+  Tomás de Aquino, *Suma Teológica* (I, I-II, II-II, III; 1,6 milhão de palavras, em 57 arquivos por
+  tratado, página própria em `#/obra/tomas-suma`; referências como `I q. 2 a. 3` ou `I-II 90.4`),
+  *Suma contra os Gentios* (4 livros, 325 mil palavras, 10 arquivos, `#/obra/tomas-scg`; referências
+  como `III, 65` ou `3.65`) e *De ente et essentia* (`#/t/tomas-de-ente/4`).
   Toque numa palavra para ver os lemas possíveis, a análise morfológica em português, a tradução e o
   verbete. Referências diretas: `#/t/cesar-guerra-gaulesa/1.1.1`, `#/t/cicero-catilinarias/1.1`,
   `#/t/virgilio-eneida/6.851`.
@@ -41,6 +43,8 @@ scripts/build_dict.py     ← TEI-XML do L&S → index.json + ls/
 scripts/build_morph.py    ← análises do Morpheus (Diogenes) → scripts/morph.pkl (não versionado)
 scripts/build_text.py     ← TEI dos textos + morfologia → docs/textos/, docs/data/formas.json
 scripts/build_pt.py       ← traducao/lotes/pt-*.tsv → docs/data/pt.json
+scripts/summa.py, tomas_outros.py  ← Suma Teológica; Suma contra os Gentios e De ente et essentia
+scripts/latim_medieval.py, escolastico.py  ← regras e léxico (com glosas PT) para o latim escolástico
 traducao/                 ← glosas inglesas e lotes de tradução
 ```
 
@@ -69,7 +73,7 @@ python3 scripts/build_morph.py /tmp/diog/dependencies/data
 git clone --depth 1 --filter=blob:none --sparse https://github.com/PerseusDL/canonical-latinLit /tmp/latlit
 git -C /tmp/latlit sparse-checkout set data/phi0448/phi001 data/phi0474/phi013 data/phi0690/phi003
 git clone --depth 1 --filter=blob:none --sparse https://github.com/Geremia/AquinasOperaOmnia /tmp/aq
-git -C /tmp/aq sparse-checkout set summa
+git -C /tmp/aq sparse-checkout set --no-cone /summa/ "/ContraGentiles*.htm" "/DeEnte&Essentia.htm"
 git clone --filter=blob:none https://github.com/AnthropologieBiblique/SummaTheologiae /tmp/stmd   # questões que faltam no AquinasOperaOmnia
 python3 scripts/build_text.py /tmp/latlit/data docs /tmp/aq/summa /tmp/stmd
 

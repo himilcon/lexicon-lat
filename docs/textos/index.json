@@ -49,7 +49,7 @@
    "qmax": 1,
    "tratado": "A doutrina sagrada",
    "palavras": 4549,
-   "versao": "b538fe1371"
+   "versao": "c047a8f64f"
   },
   {
    "id": "tomas-suma-i-q002",
@@ -67,7 +67,7 @@
    "qmax": 12,
    "tratado": "Deus: a essência divina (1/3)",
    "palavras": 33024,
-   "versao": "8c1eeb8487"
+   "versao": "77522fa929"
   },
   {
    "id": "tomas-suma-i-q013",
@@ -85,7 +85,7 @@
    "qmax": 17,
    "tratado": "Deus: a essência divina (2/3)",
    "palavras": 26665,
-   "versao": "16f98397a9"
+   "versao": "99ac24aa6d"
   },
   {
    "id": "tomas-suma-i-q018",
@@ -103,7 +103,7 @@
    "qmax": 26,
    "tratado": "Deus: a essência divina (3/3)",
    "palavras": 29105,
-   "versao": "3f220c4661"
+   "versao": "59c70feaf5"
   },
   {
    "id": "tomas-suma-i-q027",
@@ -121,7 +121,7 @@
    "qmax": 36,
    "tratado": "A Santíssima Trindade (1/2)",
    "palavras": 27410,
-   "versao": "f80ffe6c4e"
+   "versao": "2bfb074d45"
   },
   {
    "id": "tomas-suma-i-q037",
@@ -139,7 +139,7 @@
    "qmax": 43,
    "tratado": "A Santíssima Trindade (2/2)",
    "palavras": 24264,
-   "versao": "9336aacb59"
+   "versao": "7e77e79e8d"
   },
   {
    "id": "tomas-suma-i-q044",
@@ -157,7 +157,7 @@
    "qmax": 49,
    "tratado": "A criação",
    "palavras": 18236,
-   "versao": "ba5fd61dfa"
+   "versao": "b35ac07378"
   },
   {
    "id": "tomas-suma-i-q050",
@@ -175,7 +175,7 @@
    "qmax": 58,
    "tratado": "Os anjos (1/2)",
    "palavras": 21887,
-   "versao": "ebf1ceef86"
+   "versao": "f2eab878e7"
   },
   {
    "id": "tomas-suma-i-q059",
@@ -193,7 +193,7 @@
    "qmax": 64,
    "tratado": "Os anjos (2/2)",
    "palavras": 19624,
-   "versao": "a43851a869"
+   "versao": "47dcb04ba5"
   },
   {
    "id": "tomas-suma-i-q065",
@@ -211,7 +211,7 @@
    "qmax": 74,
    "tratado": "A obra dos seis dias",
    "palavras": 21790,
-   "versao": "0e6a1c4442"
+   "versao": "900fee3810"
   },
   {
    "id": "tomas-suma-i-q075",
@@ -229,7 +229,7 @@
    "qmax": 79,
    "tratado": "O homem (1/3)",
    "palavras": 29666,
-   "versao": "497a01c146"
+   "versao": "46c306915d"
   },
   {
    "id": "tomas-suma-i-q080",
@@ -247,7 +247,7 @@
    "qmax": 89,
    "tratado": "O homem (2/3)",
    "palavras": 31936,
-   "versao": "c14d15e511"
+   "versao": "e543748b26"
   },
   {
    "id": "tomas-suma-i-q090",
@@ -265,7 +265,7 @@
    "qmax": 102,
    "tratado": "O homem (3/3)",
    "palavras": 27824,
-   "versao": "f586cd3802"
+   "versao": "d0a82b5c14"
   },
   {
    "id": "tomas-suma-i-q103",
@@ -283,7 +283,7 @@
    "qmax": 110,
    "tratado": "O governo das criaturas (1/2)",
    "palavras": 24185,
-   "versao": "43cf2f915b"
+   "versao": "7513088b8f"
   },
   {
    "id": "tomas-suma-i-q111",
@@ -301,7 +301,7 @@
    "qmax": 119,
    "tratado": "O governo das criaturas (2/2)",
    "palavras": 23999,
-   "versao": "e976815e84"
+   "versao": "66fd089011"
   },
   {
    "id": "tomas-suma-i-ii-q001",
@@ -319,7 +319,7 @@
    "qmax": 5,
    "tratado": "O fim último e a bem-aventurança",
    "palavras": 21295,
-   "versao": "09f0ebe9c2"
+   "versao": "4c7ecc2f3b"
   },
   {
    "id": "tomas-suma-i-ii-q006",
@@ -337,7 +337,7 @@
    "qmax": 14,
    "tratado": "Os atos humanos (1/2)",
    "palavras": 22334,
-   "versao": "54cafc9b35"
+   "versao": "e6fd11016e"
   },
   {
    "id": "tomas-suma-i-ii-q015",
@@ -355,7 +355,7 @@
    "qmax": 21,
    "tratado": "Os atos humanos (2/2)",
    "palavras": 23952,
-   "versao": "9f1f8435d2"
+   "versao": "d8faa0d160"
   },
   {
    "id": "tomas-suma-i-ii-q022",
@@ -373,7 +373,7 @@
    "qmax": 34,
    "tratado": "As paixões (1/2)",
    "palavras": 30510,
-   "versao": "d0f7b14e97"
+   "versao": "aa1750cfb4"
   },
   {
    "id": "tomas-suma-i-ii-q035",
@@ -391,7 +391,7 @@
    "qmax": 48,
    "tratado": "As paixões (2/2)",
    "palavras": 31539,
-   "versao": "7d2ca03105"
+   "versao": "4ff66a532a"
   },
   {
    "id": "tomas-suma-i-ii-q049",
@@ -409,7 +409,7 @@
    "qmax": 54,
    "tratado": "Os hábitos",
    "palavras": 15256,
-   "versao": "2c3c826ff6"
+   "versao": "def781f5ed"
   },
   {
    "id": "tomas-suma-i-ii-q055",
@@ -427,7 +427,7 @@
    "qmax": 63,
    "tratado": "As virtudes (1/2)",
    "palavras": 24325,
-   "versao": "d813d9d549"
+   "versao": "bcc756d949"
   },
   {
    "id": "tomas-suma-i-ii-q064",
@@ -445,7 +445,7 @@
    "qmax": 70,
    "tratado": "As virtudes (2/2)",
    "palavras": 23827,
-   "versao": "78adcbf230"
+   "versao": "442d8006df"
   },
   {
    "id": "tomas-suma-i-ii-q071",
@@ -463,7 +463,7 @@
    "qmax": 78,
    "tratado": "Os vícios e os pecados (1/2)",
    "palavras": 31221,
-   "versao": "c53c74d28a"
+   "versao": "1ab1464567"
   },
   {
    "id": "tomas-suma-i-ii-q079",
@@ -481,7 +481,7 @@
    "qmax": 89,
    "tratado": "Os vícios e os pecados (2/2)",
    "palavras": 29004,
-   "versao": "b8cc441ae7"
+   "versao": "78edd4f9a4"
   },
   {
    "id": "tomas-suma-i-ii-q090",
@@ -499,7 +499,7 @@
    "qmax": 101,
    "tratado": "A lei (1/2)",
    "palavras": 39123,
-   "versao": "511091f975"
+   "versao": "921564b443"
   },
   {
    "id": "tomas-suma-i-ii-q102",
@@ -517,7 +517,7 @@
    "qmax": 108,
    "tratado": "A lei (2/2)",
    "palavras": 40416,
-   "versao": "68658c0f44"
+   "versao": "6823bcd402"
   },
   {
    "id": "tomas-suma-i-ii-q109",
@@ -535,7 +535,7 @@
    "qmax": 114,
    "tratado": "A graça",
    "palavras": 26109,
-   "versao": "83a544b9ec"
+   "versao": "16c945663d"
   },
   {
    "id": "tomas-suma-ii-ii-q001",
@@ -553,7 +553,7 @@
    "qmax": 7,
    "tratado": "A fé (1/2)",
    "palavras": 22478,
-   "versao": "acd7d999cc"
+   "versao": "819ae66807"
   },
   {
    "id": "tomas-suma-ii-ii-q008",
@@ -571,7 +571,7 @@
    "qmax": 16,
    "tratado": "A fé (2/2)",
    "palavras": 23111,
-   "versao": "ae9dfd0e9e"
+   "versao": "fe1ff4c796"
   },
   {
    "id": "tomas-suma-ii-ii-q017",
@@ -589,7 +589,7 @@
    "qmax": 22,
    "tratado": "A esperança",
    "palavras": 15922,
-   "versao": "ed89e08db9"
+   "versao": "7fee5b4782"
   },
   {
    "id": "tomas-suma-ii-ii-q023",
@@ -607,7 +607,7 @@
    "qmax": 31,
    "tratado": "A caridade (1/2)",
    "palavras": 35181,
-   "versao": "58a624f774"
+   "versao": "b43a3e58c3"
   },
   {
    "id": "tomas-suma-ii-ii-q032",
@@ -625,7 +625,7 @@
    "qmax": 46,
    "tratado": "A caridade (2/2)",
    "palavras": 38803,
-   "versao": "27d043efb1"
+   "versao": "f64b5daa03"
   },
   {
    "id": "tomas-suma-ii-ii-q047",
@@ -643,7 +643,7 @@
    "qmax": 56,
    "tratado": "A prudência",
    "palavras": 24156,
-   "versao": "8b2e65415c"
+   "versao": "c986cb393a"
   },
   {
    "id": "tomas-suma-ii-ii-q057",
@@ -661,7 +661,7 @@
    "qmax": 67,
    "tratado": "A justiça (1/5)",
    "palavras": 34146,
-   "versao": "21967ac621"
+   "versao": "89ee574a87"
   },
   {
    "id": "tomas-suma-ii-ii-q068",
@@ -679,7 +679,7 @@
    "qmax": 82,
    "tratado": "A justiça (2/5)",
    "palavras": 31453,
-   "versao": "9157045883"
+   "versao": "b470eb36ef"
   },
   {
    "id": "tomas-suma-ii-ii-q083",
@@ -697,7 +697,7 @@
    "qmax": 93,
    "tratado": "A justiça (3/5)",
    "palavras": 35582,
-   "versao": "2bee90b163"
+   "versao": "a2e96ba724"
   },
   {
    "id": "tomas-suma-ii-ii-q094",
@@ -715,7 +715,7 @@
    "qmax": 105,
    "tratado": "A justiça (4/5)",
    "palavras": 32809,
-   "versao": "698ad7800b"
+   "versao": "23a32190ff"
   },
   {
    "id": "tomas-suma-ii-ii-q106",
@@ -733,7 +733,7 @@
    "qmax": 122,
    "tratado": "A justiça (5/5)",
    "palavras": 34400,
-   "versao": "a30e8a4e6c"
+   "versao": "e3952fb4f1"
   },
   {
    "id": "tomas-suma-ii-ii-q123",
@@ -751,7 +751,7 @@
    "qmax": 140,
    "tratado": "A fortaleza",
    "palavras": 33742,
-   "versao": "33e8702f63"
+   "versao": "50f2d08b43"
   },
   {
    "id": "tomas-suma-ii-ii-q141",
@@ -769,7 +769,7 @@
    "qmax": 154,
    "tratado": "A temperança (1/2)",
    "palavras": 38045,
-   "versao": "1f975a4332"
+   "versao": "561818f375"
   },
   {
    "id": "tomas-suma-ii-ii-q155",
@@ -787,7 +787,7 @@
    "qmax": 170,
    "tratado": "A temperança (2/2)",
    "palavras": 36639,
-   "versao": "7e1b7fe85b"
+   "versao": "5b65909aca"
   },
   {
    "id": "tomas-suma-ii-ii-q171",
@@ -805,7 +805,7 @@
    "qmax": 178,
    "tratado": "A profecia e as graças carismáticas",
    "palavras": 22924,
-   "versao": "b81ee415e2"
+   "versao": "f61d7e8910"
   },
   {
    "id": "tomas-suma-ii-ii-q179",
@@ -823,7 +823,7 @@
    "qmax": 182,
    "tratado": "A vida ativa e a vida contemplativa",
    "palavras": 10690,
-   "versao": "5fa097aa39"
+   "versao": "c2293934a1"
   },
   {
    "id": "tomas-suma-ii-ii-q183",
@@ -841,7 +841,7 @@
    "qmax": 186,
    "tratado": "Os estados de vida (1/2)",
    "palavras": 22541,
-   "versao": "3adc5b6370"
+   "versao": "15efecfc4e"
   },
   {
    "id": "tomas-suma-ii-ii-q187",
@@ -859,7 +859,7 @@
    "qmax": 189,
    "tratado": "Os estados de vida (2/2)",
    "palavras": 21428,
-   "versao": "f27b4ee356"
+   "versao": "14d74a31de"
   },
   {
    "id": "tomas-suma-iii-q001",
@@ -877,7 +877,7 @@
    "qmax": 7,
    "tratado": "O mistério da Encarnação (1/3)",
    "palavras": 33057,
-   "versao": "e43b79c4b3"
+   "versao": "60c0fb6731"
   },
   {
    "id": "tomas-suma-iii-q008",
@@ -895,7 +895,7 @@
    "qmax": 15,
    "tratado": "O mistério da Encarnação (2/3)",
    "palavras": 24350,
-   "versao": "765230b42c"
+   "versao": "9c20bb56e0"
   },
   {
    "id": "tomas-suma-iii-q016",
@@ -913,7 +913,7 @@
    "qmax": 26,
    "tratado": "O mistério da Encarnação (3/3)",
    "palavras": 31137,
-   "versao": "98ee6d2ceb"
+   "versao": "5a7c162fd1"
   },
   {
    "id": "tomas-suma-iii-q027",
@@ -931,7 +931,7 @@
    "qmax": 37,
    "tratado": "A vida de Cristo (1/3)",
    "palavras": 36929,
-   "versao": "2dfd5309a7"
+   "versao": "a0e36fb695"
   },
   {
    "id": "tomas-suma-iii-q038",
@@ -949,7 +949,7 @@
    "qmax": 47,
    "tratado": "A vida de Cristo (2/3)",
    "palavras": 37369,
-   "versao": "ea488955f7"
+   "versao": "de330a7290"
   },
   {
    "id": "tomas-suma-iii-q048",
@@ -967,7 +967,7 @@
    "qmax": 59,
    "tratado": "A vida de Cristo (3/3)",
    "palavras": 37531,
-   "versao": "e6b37b7dcc"
+   "versao": "31bbe825d4"
   },
   {
    "id": "tomas-suma-iii-q060",
@@ -985,7 +985,7 @@
    "qmax": 65,
    "tratado": "Os sacramentos em geral",
    "palavras": 21270,
-   "versao": "868b500097"
+   "versao": "e5486591c5"
   },
   {
    "id": "tomas-suma-iii-q066",
@@ -1003,7 +1003,7 @@
    "qmax": 72,
    "tratado": "O batismo e a confirmação",
    "palavras": 33400,
-   "versao": "02cc7f5ca0"
+   "versao": "5f9e61a671"
   },
   {
    "id": "tomas-suma-iii-q073",
@@ -1021,7 +1021,7 @@
    "qmax": 78,
    "tratado": "A Eucaristia (1/2)",
    "palavras": 28877,
-   "versao": "2fce34f34a"
+   "versao": "95e2d9edad"
   },
   {
    "id": "tomas-suma-iii-q079",
@@ -1039,7 +1039,7 @@
    "qmax": 83,
    "tratado": "A Eucaristia (2/2)",
    "palavras": 29480,
-   "versao": "dab1269a40"
+   "versao": "b235ac381d"
   },
   {
    "id": "tomas-suma-iii-q084",
@@ -1057,7 +1057,229 @@
    "qmax": 90,
    "tratado": "A penitência",
    "palavras": 22993,
-   "versao": "54eb5364a5"
+   "versao": "be605574ff"
+  },
+  {
+   "id": "tomas-scg-1-c001",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, I, cc. 1–47",
+   "tituloLa": "Summa contra Gentiles, Liber primus, cc. 1–47",
+   "descricao": "O ofício do sábio e o método da obra; a existência de Deus e seus atributos: eternidade, simplicidade, perfeição, bondade, unidade, infinidade; o conhecimento, a vontade, o amor e a bem-aventurança de Deus.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "I",
+   "parsLa": "Liber primus",
+   "parsPt": "Livro I",
+   "qmin": 1,
+   "qmax": 47,
+   "tratado": "Deus em si mesmo (1/2)",
+   "livro": "1",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 26263,
+   "versao": "33bbcb5b04"
+  },
+  {
+   "id": "tomas-scg-1-c048",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, I, cc. 48–102",
+   "tituloLa": "Summa contra Gentiles, Liber primus, cc. 48–102",
+   "descricao": "O ofício do sábio e o método da obra; a existência de Deus e seus atributos: eternidade, simplicidade, perfeição, bondade, unidade, infinidade; o conhecimento, a vontade, o amor e a bem-aventurança de Deus.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "I",
+   "parsLa": "Liber primus",
+   "parsPt": "Livro I",
+   "qmin": 48,
+   "qmax": 102,
+   "tratado": "Deus em si mesmo (2/2)",
+   "livro": "1",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 26313,
+   "versao": "511adc4a40"
+  },
+  {
+   "id": "tomas-scg-2-c001",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, II, cc. 1–59",
+   "tituloLa": "Summa contra Gentiles, Liber secundus, cc. 1–59",
+   "descricao": "O poder de Deus e a criação; a distinção das criaturas; as substâncias intelectuais e a alma humana, sua união com o corpo e sua imortalidade.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "II",
+   "parsLa": "Liber secundus",
+   "parsPt": "Livro II",
+   "qmin": 1,
+   "qmax": 59,
+   "tratado": "A criação (1/2)",
+   "livro": "2",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 37952,
+   "versao": "328b6a85ed"
+  },
+  {
+   "id": "tomas-scg-2-c060",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, II, cc. 60–101",
+   "tituloLa": "Summa contra Gentiles, Liber secundus, cc. 60–101",
+   "descricao": "O poder de Deus e a criação; a distinção das criaturas; as substâncias intelectuais e a alma humana, sua união com o corpo e sua imortalidade.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "II",
+   "parsLa": "Liber secundus",
+   "parsPt": "Livro II",
+   "qmin": 60,
+   "qmax": 101,
+   "tratado": "A criação (2/2)",
+   "livro": "2",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 38642,
+   "versao": "35521e6601"
+  },
+  {
+   "id": "tomas-scg-3-c001",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, III, cc. 1–59",
+   "tituloLa": "Summa contra Gentiles, Liber tertius, cc. 1–59",
+   "descricao": "Deus como fim de todas as coisas; a felicidade do homem na visão de Deus; o governo divino do mundo, o destino, os milagres, a lei divina, a graça.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "III",
+   "parsLa": "Liber tertius",
+   "parsPt": "Livro III",
+   "qmin": 1,
+   "qmax": 59,
+   "tratado": "A providência (1/3)",
+   "livro": "3",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 37656,
+   "versao": "36db63fc30"
+  },
+  {
+   "id": "tomas-scg-3-c060",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, III, cc. 60–106",
+   "tituloLa": "Summa contra Gentiles, Liber tertius, cc. 60–106",
+   "descricao": "Deus como fim de todas as coisas; a felicidade do homem na visão de Deus; o governo divino do mundo, o destino, os milagres, a lei divina, a graça.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "III",
+   "parsLa": "Liber tertius",
+   "parsPt": "Livro III",
+   "qmin": 60,
+   "qmax": 106,
+   "tratado": "A providência (2/3)",
+   "livro": "3",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 37495,
+   "versao": "d333835ee3"
+  },
+  {
+   "id": "tomas-scg-3-c107",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, III, cc. 107–163",
+   "tituloLa": "Summa contra Gentiles, Liber tertius, cc. 107–163",
+   "descricao": "Deus como fim de todas as coisas; a felicidade do homem na visão de Deus; o governo divino do mundo, o destino, os milagres, a lei divina, a graça.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "III",
+   "parsLa": "Liber tertius",
+   "parsPt": "Livro III",
+   "qmin": 107,
+   "qmax": 163,
+   "tratado": "A providência (3/3)",
+   "livro": "3",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 37378,
+   "versao": "c600facbb7"
+  },
+  {
+   "id": "tomas-scg-4-c001",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, IV, cc. 1–23",
+   "tituloLa": "Summa contra Gentiles, Liber quartus, cc. 1–23",
+   "descricao": "A Trindade, a Encarnação, os sacramentos, a ressurreição e o juízo: o que só se conhece pela revelação.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "IV",
+   "parsLa": "Liber quartus",
+   "parsPt": "Livro IV",
+   "qmin": 1,
+   "qmax": 23,
+   "tratado": "As verdades reveladas (1/3)",
+   "livro": "4",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 26909,
+   "versao": "c5c07252c0"
+  },
+  {
+   "id": "tomas-scg-4-c024",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, IV, cc. 24–55",
+   "tituloLa": "Summa contra Gentiles, Liber quartus, cc. 24–55",
+   "descricao": "A Trindade, a Encarnação, os sacramentos, a ressurreição e o juízo: o que só se conhece pela revelação.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "IV",
+   "parsLa": "Liber quartus",
+   "parsPt": "Livro IV",
+   "qmin": 24,
+   "qmax": 55,
+   "tratado": "As verdades reveladas (2/3)",
+   "livro": "4",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 30280,
+   "versao": "c2818baf10"
+  },
+  {
+   "id": "tomas-scg-4-c056",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios, IV, cc. 56–97",
+   "tituloLa": "Summa contra Gentiles, Liber quartus, cc. 56–97",
+   "descricao": "A Trindade, a Encarnação, os sacramentos, a ressurreição e o juízo: o que só se conhece pela revelação.",
+   "edicaoCurta": "Leonina",
+   "obra": "tomas-scg",
+   "pars": "IV",
+   "parsLa": "Liber quartus",
+   "parsPt": "Livro IV",
+   "qmin": 56,
+   "qmax": 97,
+   "tratado": "As verdades reveladas (3/3)",
+   "livro": "4",
+   "rotPartes": "Capítulos",
+   "obraTitulo": "Suma contra os Gentios",
+   "palavras": 25999,
+   "versao": "1c9853a031"
+  },
+  {
+   "id": "tomas-de-ente",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "O ente e a essência",
+   "tituloLa": "De ente et essentia",
+   "descricao": "Opúsculo da juventude de Tomás (c. 1252–1256), escrito para os confrades: o que significam “ente” e “essência”, e como a essência se encontra nas substâncias compostas, nas substâncias separadas e nos acidentes. Contém a distinção entre essência e ser (esse).",
+   "edicaoCurta": "Leonina",
+   "rotPartes": "Capítulos",
+   "palavras": 7318,
+   "versao": "390c821368"
   }
  ],
  "obras": [
@@ -1069,7 +1291,39 @@
    "tituloLa": "Summa Theologiae",
    "edicaoCurta": "Leonina",
    "descricao": "A suma da teologia de Tomás de Aquino (1265–1273), em questões e artigos: Deus e a criação (I), o fim do homem, os atos humanos, as virtudes, a lei e a graça (I-II, II-II), Cristo e os sacramentos (III). Texto completo das partes escritas por Tomás, dividido por tratados.",
+   "unidade": [
+    "q.",
+    "qq."
+   ],
+   "divisao": "por tratados",
+   "refExemplos": [
+    "I q. 2 a. 3",
+    "I-II 90.4",
+    "III q. 75"
+   ],
+   "notaFinal": "O Supplementum (completado pelos discípulos de Tomás a partir do Comentário às Sentenças) não está incluído.",
    "palavras": 1573518
+  },
+  {
+   "id": "tomas-scg",
+   "autor": "Tomás de Aquino",
+   "autorLa": "S. Thomas de Aquino",
+   "titulo": "Suma contra os Gentios",
+   "tituloLa": "Summa contra Gentiles",
+   "edicaoCurta": "Leonina",
+   "descricao": "Liber de veritate catholicae fidei contra errores infidelium (c. 1259–1265), em quatro livros e 463 capítulos: o que a razão pode mostrar sobre Deus (I), a criação (II) e a providência (III), e as verdades que só a revelação dá a conhecer (IV). Argumentação contínua, por capítulos, e não em questões disputadas.",
+   "unidade": [
+    "c.",
+    "cc."
+   ],
+   "divisao": "por livros",
+   "refExemplos": [
+    "I, 13",
+    "3.65",
+    "IV 11"
+   ],
+   "notaFinal": "Alguns capítulos não têm título latino na fonte digital (I 37, 52; II 5, 14, 29, 81 e outros); o texto está completo.",
+   "palavras": 324887
   }
  ]
 }

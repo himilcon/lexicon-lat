@@ -24,6 +24,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import summa  # noqa: E402
 summa.MD_SRC = sys.argv[4] if len(sys.argv) > 4 else None
+import tomas_outros as TO  # noqa: E402
+import escolastico as ESC  # noqa: E402
+ESC_FORMAS, ESC_INFO = ESC.gerar()
+STATE = {"esc": False}   # léxico e derivações escolásticas só nos textos de Tomás
 import latim_medieval as LM  # noqa: E402
 MORPH = pickle.load(open(os.path.join(HERE, "morph.pkl"), "rb"))
 LSKEYS = json.load(open(os.path.join(HERE, "ls_keys.json"), encoding="utf-8"))   # id -> [chave, chave normalizada]
@@ -223,11 +227,66 @@ def _ls_id(key):
     return ids[0] if ids else None
 
 
+def _escolastico(low, deriv=True):
+    """léxico escolástico (escolastico.py), com grafias variantes, advérbios, comparativos e prefixos"""
+    if not STATE["esc"]:
+        return []
+    for c in [low] + [v.lower() for v in LM.variantes(low)]:
+        if c in ESC.FORMAS:
+            return [(lem, _ls_id(key), m) for lem, key, m in ESC.FORMAS[c]]
+        if c in ESC_FORMAS:
+            return [(lem, _ls_id(lem.lower()) if lem[0].islower() else None, m) for lem, m in ESC_FORMAS[c]]
+    if not deriv or len(low) < 6:
+        return []
+
+    def base(b):
+        return list(lookup(b) or []) or _escolastico(b, False)
+    # advérbios: accidentaliter ← accidentalis, contingenter ← contingens, immediate ← immediatus
+    for end, reps in (("iter", ["is"]), ("nter", ["ns"]), ("ter", ["is", "us"]), ("e", ["us"])):
+        if low.endswith(end):
+            for r in reps:
+                cand = low[: -len(end)] + r
+                an = [a for a in base(cand) if "nom" in a[2] and "sg" in a[2]
+                      and (end != "e" or "part" in a[2] or re.sub(r"#\d+$", "", a[0]).lower() == cand)]
+                if an:
+                    return [(an[0][0], an[0][1], "adverbial")]
+    # comparativos: perfectiori ← perfectus, excellentiori ← excellens, principalius ← principalis
+    m = re.match(r"(.+?)(ior|ioris|iori|iorem|iore|iores|iorum|ioribus|iora|ius)$", low)
+    if m:
+        g = m.group(1)
+        for cand in (g + "us", g + "is", g[:-1] + "s" if g.endswith("nt") else None):
+            if not cand:
+                continue
+            an = [a for a in base(cand) if "nom" in a[2] and "sg" in a[2]]
+            if an:
+                return [(an[0][0], an[0][1], "comp" + (" adverbial" if m.group(2) == "ius" else ""))]
+    # prefixos: praesupponit ← prae + suppono, supradictis ← supra + dictus, satisfacere ← satis + facio
+    for pre in ("prae", "supra", "super", "satis", "sub", "con", "re"):
+        if low.startswith(pre) and len(low) - len(pre) >= 4:
+            an = lookup(low[len(pre):])
+            if not an and low[len(pre):].startswith("ex") and not low[len(pre):].startswith("exs"):
+                an = lookup("exs" + low[len(pre) + 2:])
+            if an:
+                out = []
+                for lem, i, mm in an:
+                    lk = re.sub(r"#\d+$", "", lem)
+                    if not lk[:1].islower():
+                        continue
+                    full = pre + lk
+                    out.append((full, _ls_id(full), mm))
+                if out:
+                    return out
+    return []
+
+
 def _medieval(form):
     """formas que o Morpheus não reconhece: compostos, grafias medievais, verbetes só do L&S"""
     low = form.lower()
     if low in LM.COMPOSTOS:
         return [(lem, _ls_id(key), "compound" + (":" + lab if lab else "")) for lem, key, lab in LM.COMPOSTOS[low]]
+    an = _escolastico(low, False)
+    if an:
+        return an
     for v in LM.variantes(form):
         an = lookup(v)
         if an:
@@ -242,6 +301,9 @@ def _medieval(form):
         ids = BY_NORM.get(norm(c)) if len(c) >= 3 else None
         if ids:
             return [(HEAD.get(i, c), i, "lsonly") for i in ids[:2]]
+    an = _escolastico(low)
+    if an:
+        return an
     if len(form) >= 5:
         for c in cands:
             for g in LM.flexao_candidatas(c):
@@ -418,13 +480,28 @@ OBRAS = [{
     "descricao": "A suma da teologia de Tomás de Aquino (1265–1273), em questões e artigos: Deus e a criação (I), "
                  "o fim do homem, os atos humanos, as virtudes, a lei e a graça (I-II, II-II), Cristo e os sacramentos (III). "
                  "Texto completo das partes escritas por Tomás, dividido por tratados.",
+    "unidade": ["q.", "qq."], "divisao": "por tratados", "refExemplos": ["I q. 2 a. 3", "I-II 90.4", "III q. 75"],
+    "notaFinal": "O Supplementum (completado pelos discípulos de Tomás a partir do Comentário às Sentenças) não está incluído.",
+}, {
+    "id": TO.SCG, "autor": "Tomás de Aquino", "autorLa": "S. Thomas de Aquino",
+    "titulo": "Suma contra os Gentios", "tituloLa": "Summa contra Gentiles", "edicaoCurta": "Leonina",
+    "descricao": "Liber de veritate catholicae fidei contra errores infidelium (c. 1259–1265), em quatro livros e 463 capítulos: "
+                 "o que a razão pode mostrar sobre Deus (I), a criação (II) e a providência (III), e as verdades que só a "
+                 "revelação dá a conhecer (IV). Argumentação contínua, por capítulos, e não em questões disputadas.",
+    "unidade": ["c.", "cc."], "divisao": "por livros", "refExemplos": ["I, 13", "3.65", "IV 11"],
+    "notaFinal": "Alguns capítulos não têm título latino na fonte digital (I 37, 52; II 5, 14, 29, 81 e outros); o texto está completo.",
 }]
 
 
 def build(work):
-    if work["tipo"] == "summa":
+    if work["tipo"] in ("summa", "scg", "deente"):
         doc = Doc()
-        summa.build_summa(work, doc)
+        if work["tipo"] == "summa":
+            summa.build_summa(work, doc)
+        elif work["tipo"] == "scg":
+            TO.build_scg(work, doc)
+        else:
+            TO.build_deente(os.path.dirname(os.path.normpath(SUMMA)), doc)
         doc.close()
         return doc
     path = os.path.join(SRC, work["arquivo"])
@@ -437,7 +514,8 @@ def build(work):
 
 
 def main():
-    works = WORKS + (summa.works(SUMMA) if SUMMA else [])
+    aq = os.path.dirname(os.path.normpath(SUMMA)) if SUMMA else None
+    works = WORKS + (summa.works(SUMMA) + TO.works(aq) + [TO.DEENTE] if SUMMA else [])
     docs = [(w, build(w)) for w in works]
 
     # frequência dos lemas no conjunto dos textos, estimada por EM: cada palavra ambígua divide sua
@@ -451,6 +529,7 @@ def main():
     occ = []
     for wk_, d in docs:
         grp = wk_.get("grupo", "classicos")
+        STATE["esc"] = grp == "tomas-suma"
         for b in d.blocks:
             x = b.get("x", [])
             for j, it in enumerate(x):
@@ -493,6 +572,7 @@ def main():
     for wk, d in docs:
         grp = wk.get("grupo", "classicos")
         w = W[grp]
+        STATE["esc"] = grp == "tomas-suma"
         lemas, lem_ix = [], {}
         morfs, morf_ix = [], {}
 
@@ -508,7 +588,8 @@ def main():
             if key not in lem_ix:
                 name = HEAD.get(lid) if lid else None
                 lem_ix[key] = len(lemas)
-                lemas.append([name or re.sub(r"#\d+$", "", lemma), lid or ""])
+                nm = name or re.sub(r"#\d+$", "", lemma)
+                lemas.append([nm, lid or ""] + (list(ESC_INFO[lemma]) if not lid and lemma in ESC_INFO else []))
             return lem_ix[key]
 
         for b in d.blocks:
@@ -562,7 +643,7 @@ def main():
             "nome": "Perseus Digital Library (canonical-latinLit)",
             "url": "https://github.com/PerseusDL/canonical-latinLit/blob/master/data/" + wk["arquivo"],
             "licenca": "CC BY-SA 4.0"}
-        OBRA_KEYS = ("obra", "pars", "parsLa", "parsPt", "qmin", "qmax", "tratado")
+        OBRA_KEYS = ("obra", "pars", "parsLa", "parsPt", "qmin", "qmax", "tratado", "livro", "rotPartes", "obraTitulo")
         meta |= {k: wk[k] for k in OBRA_KEYS if k in wk}
         meta["fonteAnotacao"] = {"nome": "Morpheus (Perseus Digital Library), via dados do Diogenes",
                                  "url": "https://github.com/perseids-tools/morpheus", "licenca": "ver LICENSE-DATA.md",

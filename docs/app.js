@@ -229,7 +229,7 @@ function viewHome() {
     <h3 class="count">Experimente</h3><div class="chips">${examples}<a href="#/acaso">ao acaso ↻</a></div>
     <h3 class="count">Ler textos</h3>
     <a class="home-texts" href="#/textos"><span lang="la">Caesar · Cicero · Vergilius · Thomas de Aquino</span>
-      <span>César (<i>A Guerra da Gália</i>), Cícero (<i>Catilinárias</i>), Virgílio (<i>Eneida</i>) e Tomás de Aquino (<i>Suma Teológica</i>):
+      <span>César (<i>A Guerra da Gália</i>), Cícero (<i>Catilinárias</i>), Virgílio (<i>Eneida</i>) e Tomás de Aquino (<i>Suma Teológica</i>, <i>Suma contra os Gentios</i>, <i>O ente e a essência</i>):
         toque em cada palavra para ver lema, análise e verbete →</span></a>`;
 }
 
@@ -385,6 +385,10 @@ function viewAbout() {
       <code>I q. 2 a. 3</code>, <code>I-II 90.4</code>, <code>III q. 75</code>. Para o latim escolástico, a análise acrescenta ao Morpheus
       regras próprias: abreviaturas de citação (<i>Ethic.</i>, <i>Matth.</i>), compostos (<i>inquantum</i>, <i>huiusmodi</i>),
       grafias medievais (<i>poenitentia</i>) e formas registradas no Lewis &amp; Short mas ausentes do Morpheus.</p>
+    <p>A <i>Suma contra os Gentios</i> está dividida por livros, também em <a href="#/obra/tomas-scg">página própria</a>; cite como
+      <code>III, 65</code> ou <code>3.65</code>. <i>O ente e a essência</i> é um texto único, por capítulos (<code>4</code>).
+      Os termos escolásticos que não estão no Lewis &amp; Short (<i>quidditas</i>, <i>sensitivus</i>, <i>totaliter</i>, <i>causo</i>…)
+      vêm de um pequeno léxico próprio, com glosa em português gerada por IA.</p>
 
     <h3>Instalar no iPhone / iPad</h3>
     <p>No Safari, toque em <b>Compartilhar</b> → <b>Adicionar à Tela de Início</b>. Os verbetes abertos e os textos lidos ficam guardados para uso sem internet.</p>

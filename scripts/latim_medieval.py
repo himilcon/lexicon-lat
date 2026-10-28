@@ -69,7 +69,9 @@ VARIANTES = [
     (r"oe", "ae"), (r"ae", "oe"), (r"^obed", "oboed"), (r"intellig", "intelleg"), (r"neglig", "negleg"),
     (r"caerem", "caerim"), (r"^ex([aeiou])", r"exs\1"), (r"^exspect", "expect"), (r"ti([aeiou])", r"ci\1"),
     (r"ci([aeiou])", r"ti\1"), (r"^nichil", "nihil"), (r"michi", "mihi"), (r"^hier", "hier"), (r"y", "i"),
-    (r"^Boet", "Boeth"), (r"^Hiero", "Hiero"),
+    (r"^Boet", "Boeth"), (r"^Hiero", "Hiero"), (r"quidit", "quiddit"), (r"^diffin", "defin"), (r"undam$", "umdam"),
+    (r"undem$", "umdem"), (r"^verunt", "verumt"), (r"^nunqu", "numqu"), (r"^tand", "tamd"), (r"^obiic", "obic"),
+    (r"^subiic", "subic"), (r"^extasi", "ecstasi"), (r"^incoep", "incep"),
 ]
 
 # terminação da forma → terminações possíveis da entrada (ordem de preferência)
